@@ -1,6 +1,6 @@
 # Direct dependencies tested in GitHub Actions on 2026-10-08, Python 3.11.17.
 # Transitive versions are captured separately in CI pip-freeze.txt.
-numpy==2.4.6
+numpy==2.5.3
 pandas==2.3.3
 scipy==1.17.1
 scikit-learn==1.9.1
