@@ -10,6 +10,16 @@
 - validation audit documented;
 - separation between submitted MSc work and post-MSc continuation documented.
 
+## New post-MSc code
+
+A 2026 reconstruction module is proposed at
+[corrected_classical_ml/reconstruction_2026/](corrected_classical_ml/reconstruction_2026/README.md).
+It includes a pinned upstream data downloader, independent Extra Trees /
+Random Forest baselines, grouped and chronological validation options,
+fold-safe samplers, an overview notebook and synthetic fixture tests.
+Tests passed locally on synthetic data; the 845-event upstream benchmark
+has **not** been executed and verified in this GitHub repository.
+
 ## Not claimed yet
 
 - exact recovery of the 2024 executable notebook;
