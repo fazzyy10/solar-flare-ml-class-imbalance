@@ -120,8 +120,7 @@ provided. Tests use **synthetic fixtures**, not a claimed reproduction of
 the dissertation's numerical results. Original upstream data are not
 redistributed in this repository.
 
-This is not the recovered 2024 notebook or an independent replication of
-the thesis's reported 29,400 model tests.
+See [the real-data benchmark and limitations](corrected_classical_ml/reconstruction_2026/RESULTS_AND_LIMITATIONS_2026-10-08.md), based on successful GitHub Actions execution of 18 initial configurations, 24 additional repeated-seed configurations and six four-class chronological sensitivity configurations. This is not the recovered 2024 notebook or an independent replication of the thesis's reported 29,400 model tests.
 
 ## What is deliberately not claimed
 
@@ -142,6 +141,6 @@ Those boundaries are intentional.
 **Public full text: available.**  
 **Provenance audit: documented.**  
 **Exact reproduction: not currently claimed.**  
-**Corrected fold-safe rerun: planned as new post-MSc work and will only be promoted once verified.**
+**New post-MSc fold-safe benchmark: run and verified on the public DeepSun dataset; historical replication still not claimed.**
 
 The point of this repository is not to make the historical work look cleaner than it was. It is to make the research trail inspectable: what was submitted, what depended on prior public work, what can be recovered, what methodological questions emerged later, and what should be tested next.
