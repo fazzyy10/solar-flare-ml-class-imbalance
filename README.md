@@ -93,44 +93,27 @@ For that reason, this repository distinguishes three evidence layers:
 
 See [PROVENANCE.md](PROVENANCE.md) and [LICENSES_AND_ATTRIBUTION.md](LICENSES_AND_ATTRIBUTION.md).
 
-## Repository map
+## Repository navigation
 
-```text
-.
-├── README.md
-├── PROVENANCE.md
-├── LICENSES_AND_ATTRIBUTION.md
-├── CITATION.cff
-├── submitted_msc_record/
-│   ├── README.md
-│   ├── THESIS_FULL_TEXT.md
-│   └── SOURCE_PDF_CHECKSUM.md
-├── docs/
-│   ├── RESEARCH_QUESTIONS.md
-│   ├── METHODS_SUBMITTED.md
-│   └── RESULTS_SUBMITTED.md
-├── data/
-│   └── README.md
-├── reproducibility_audit/
-│   ├── README.md
-│   └── VALIDATION_AUDIT.md
-├── corrected_classical_ml/
-│   └── README.md
-├── post_msc_pytorch/
-│   └── README.md
-└── environment/
-    └── README.md
-```
+| Section | What you will find |
+|---|---|
+| [Research review](docs/RESEARCH_REVIEWER_GUIDE.md) | Concise guide for academic and technical reviewers |
+| [2024 assessed dissertation](submitted_msc_record/) | Original research record and complete accessible thesis text |
+| [Methods and results](docs/) | Research questions, methodological context, verified figures and upstream comparison |
+| [2026 reproducibility study](corrected_classical_ml/reconstruction_2026/) | Independent source-retrieval, baseline code, unit tests and executable Jupyter notebook |
+| [Permanent result tables](results/2026-10-08/) | 2026 verified real-data summaries |
+| [Provenance](PROVENANCE.md) | Precise boundaries between submitted, upstream and later work |
+| [Methodological audit](reproducibility_audit/) | Issues to investigate in validation, class imbalance and temporal dependence |
 
-## New 2026 executable reconstruction (review branch)
+## Executed 2026 methodological investigation
 
-An independently implemented, **post-MSc** baseline module now lives in
+An independently implemented, **post-MSc** baseline module lives in
 [corrected_classical_ml/reconstruction_2026/](corrected_classical_ml/reconstruction_2026/README.md).
 It downloads a pinned, publicly available upstream FlareML reference dataset
 after verifying Git integrity, then supports Extra Trees / Random Forest
 evaluation with optional train-fold-only undersampling or SMOTE. Ordinary
 stratified, active-region-grouped, and chronological holdout evaluations are
-provided. Tests use **synthetic fixtures**, not a claimed reproduction of
+provided. Unit tests use **synthetic fixtures**, while the full pipeline has also been executed on the pinned public dataset. Neither is a claimed reproduction of
 the dissertation's numerical results. Original upstream data are not
 redistributed in this repository.
 
@@ -158,3 +141,13 @@ Those boundaries are intentional.
 **New post-MSc fold-safe benchmark: run and verified on the public DeepSun dataset; historical replication still not claimed.**
 
 The point of this repository is not to make the historical work look cleaner than it was. It is to make the research trail inspectable: what was submitted, what depended on prior public work, what can be recovered, what methodological questions emerged later, and what should be tested next.
+
+## About the researcher
+
+**Mohamed Fawaz Hussain Fareed** is based in Cardiff, United Kingdom. He holds an **MSc in Data Science (Distinction)** and a **BSc (Hons) in Business Information Systems (First Class)** from Cardiff Metropolitan University.
+
+His work spans **data analytics, applied data science, business analysis and process improvement**. His professional background includes healthcare revenue-cycle operations, hospitality revenue analysis and field-service coordination. Employer and client data are not included in this public repository.
+
+His research interests include reliable machine-learning evaluation, class imbalance, source provenance, and the effect of data dependence and temporal structure on modelling conclusions.
+
+[GitHub profile](https://github.com/fazzyy10) · [LinkedIn](https://www.linkedin.com/in/fawaz-hussain-706414bb/)
