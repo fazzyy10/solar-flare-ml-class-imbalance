@@ -17,7 +17,9 @@ The repository has two purposes:
 
 This is a **research record**, not a claim to replace the DeepSun forecasting service. The clearest demonstration of the work is the question it asks about rare-event validation and repeated active regions.
 
-**[Read the five-minute research guide](docs/RESEARCH_REVIEWER_GUIDE.md)** · [Methods and measured results](corrected_classical_ml/reconstruction_2026/RESULTS_AND_LIMITATIONS_2026-10-08.md) · [Permanent result tables](results/2026-10-08/) · [Source comparison with DeepSun](docs/UPSTREAM_COMPARISON.md) · [Reconstruction code and notebook](corrected_classical_ml/reconstruction_2026/)
+**[Read the five-minute research guide](docs/RESEARCH_REVIEWER_GUIDE.md)**
+
+**Research quality:** [Dataset card](data/DATASET_CARD.md) · [Model card and limitations](docs/MODEL_CARD_2026.md) · [Reproducibility checklist](docs/REPRODUCIBILITY_CHECKLIST.md) · [Code quality and contribution standard](CONTRIBUTING.md) · [Methods and measured results](corrected_classical_ml/reconstruction_2026/RESULTS_AND_LIMITATIONS_2026-10-08.md) · [Permanent result tables](results/2026-10-08/) · [Source comparison with DeepSun](docs/UPSTREAM_COMPARISON.md) · [Reconstruction code and notebook](corrected_classical_ml/reconstruction_2026/)
 
 ![Real class distribution](docs/figures/class_imbalance.svg)
 
@@ -99,7 +101,7 @@ See [PROVENANCE.md](PROVENANCE.md) and [LICENSES_AND_ATTRIBUTION.md](LICENSES_AN
 |---|---|
 | [Research review](docs/RESEARCH_REVIEWER_GUIDE.md) | Concise guide for academic and technical reviewers |
 | [2024 assessed dissertation](submitted_msc_record/) | Original research record and complete accessible thesis text |
-| [Methods and results](docs/) | Research questions, methodological context, verified figures and upstream comparison |
+| [Methods and results](docs/) | Research questions, validation details, verified figures, benchmark and limitations |
 | [2026 reproducibility study](corrected_classical_ml/reconstruction_2026/) | Independent source-retrieval, baseline code, unit tests and executable Jupyter notebook |
 | [Permanent result tables](results/2026-10-08/) | 2026 verified real-data summaries |
 | [Provenance](PROVENANCE.md) | Precise boundaries between submitted, upstream and later work |
