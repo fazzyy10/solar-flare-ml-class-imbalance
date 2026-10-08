@@ -108,6 +108,21 @@ See [PROVENANCE.md](PROVENANCE.md) and [LICENSES_AND_ATTRIBUTION.md](LICENSES_AN
     └── README.md
 ```
 
+## New 2026 executable reconstruction (review branch)
+
+An independently implemented, **post-MSc** baseline module now lives in
+[corrected_classical_ml/reconstruction_2026/](corrected_classical_ml/reconstruction_2026/README.md).
+It downloads a pinned, publicly available upstream FlareML reference dataset
+after verifying Git integrity, then supports Extra Trees / Random Forest
+evaluation with optional train-fold-only undersampling or SMOTE. Ordinary
+stratified, active-region-grouped, and chronological holdout evaluations are
+provided. Tests use **synthetic fixtures**, not a claimed reproduction of
+the dissertation's numerical results. Original upstream data are not
+redistributed in this repository.
+
+This is not the recovered 2024 notebook or an independent replication of
+the thesis's reported 29,400 model tests.
+
 ## What is deliberately not claimed
 
 This repository does **not** claim:
