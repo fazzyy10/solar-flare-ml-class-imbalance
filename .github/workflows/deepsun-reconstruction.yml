@@ -34,6 +34,8 @@ jobs:
         run: python fetch_upstream.py
       - name: Run full 18-configuration exploratory audit
         run: python sweep.py
+      - name: Run repeated-seed and four-class chronological sensitivity analyses
+        run: python sweep_extensions.py
       - name: Record dependency versions and source data integrity
         run: |
           python -m pip freeze > local_results/pip-freeze.txt
