@@ -28,7 +28,7 @@ def test_load_data_and_schema(tmp_path: Path):
     d = synthetic_data()
     raw = d.loc[:, FEATURES].copy()
     raw.insert(0, "AR", d["AR"])
-    raw.insert(0, "Flare Date", d["timestamp"].dt.strftime("%-m/%-d/%Y %H:%M"))
+    raw.insert(0, "Flare Date", d["timestamp"].dt.strftime("%m/%d/%Y %H:%M"))
     raw.insert(0, "Flare Class", d["target"] + "12")
     path = tmp_path / "test.csv"
     raw.to_csv(path, index=False)
@@ -103,3 +103,30 @@ def test_nonfinite_feature_rejected(tmp_path: Path):
     raw.to_csv(file, index=False)
     with pytest.raises(ValueError, match="Non-finite"):
         load_data(file, verify_upstream=False)
+
+
+def test_fold_result_retains_class_support_confusion_and_region_overlap():
+    df = synthetic_data()
+    result = evaluate(df, mode="grouped", folds=3)
+    for fold in result["folds"]:
+        assert fold["shared_active_regions"] == 0
+        matrix = np.asarray(fold["confusion_matrix"])
+        assert matrix.shape == (4, 4)
+        assert int(matrix.sum()) == fold["test_size"]
+        assert sum(item["support"] for item in fold["per_class_diagnostics"].values()) == fold["test_size"]
+        for cls in CLASSES:
+            diagnostic = fold["per_class_diagnostics"][cls]
+            if diagnostic["one_vs_rest_tss"] is not None:
+                assert diagnostic["one_vs_rest_tss"] == pytest.approx(fold["tss_ovr_by_class"][cls])
+
+
+def test_missing_class_must_be_explicit():
+    df = synthetic_data()
+    cutoff = df["timestamp"].nlargest(24).min()
+    df.loc[df["timestamp"] >= cutoff, "target"] = "C"
+    result = evaluate(df, mode="chronological")
+    assert not result["all_splits_four_class_evaluable"]
+    assert "X" in result["folds"][0]["unrepresented_test_classes"]
+    assert result["folds"][0]["per_class_diagnostics"]["X"]["support"] == 0
+    assert result["folds"][0]["per_class_diagnostics"]["X"]["one_vs_rest_tss"] is None
+    assert result["mean_thesis_style_ovr_bacc"] is None
