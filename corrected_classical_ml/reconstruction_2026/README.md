@@ -33,6 +33,9 @@ python experiment.py --mode stratified --model extra_trees --sampling none --out
 python experiment.py --mode grouped --model random_forest --sampling under --output local_results/grouped_under.json
 python experiment.py --mode chronological --model extra_trees --sampling smote --output local_results/chronological_smote.json
 python -m pytest -q
+python sweep.py
+python sweep_extensions.py
+python -m jupyter nbconvert --to notebook --execute overview.ipynb --output overview-executed.ipynb
 ```
 
 Downloading the dataset requires internet access. The fetch script pins the exact upstream commit, verifies Git's original file-content SHA-1, and prints a SHA-256 hash. The CSV is **not mirrored in this repository**. Files generated under `local_data/` and `local_results/` should remain uncommitted.
@@ -45,8 +48,10 @@ Downloading the dataset requires internet access. The fetch script pins the exac
 - Fits scaling and optional random undersampling or SMOTE **inside the training fold** through an `imblearn.pipeline.Pipeline`.
 - Provides two baseline classifiers: **Extra Trees** and **Random Forest**.
 - Implements ordinary stratified 5-fold CV, stratified active-region grouped CV, or an 80/20 chronological holdout as separate **new 2026 evaluation options**.
-- Records balanced accuracy and explicitly defined **one-vs-rest TSS** per class and macro TSS. The latter definition must **not** be assumed identical to the dissertation's reported aggregation.
-- Writes machine-readable JSON results **only when executed**. No performance results are pre-populated or invented here.
+- Separately reports scikit-learn macro recall and **the thesis-defined four-class one-vs-rest BACC/TSS**, calculated per class and averaged; scores are undefined for any test fold missing a flare class. The thesis's 2024 *experimental protocol* remains distinct despite matching metric definitions.
+- Writes machine-readable JSON and CSV results **only when executed**. The verified 8 October 2026 outputs are summarised in [RESULTS_AND_LIMITATIONS_2026-10-08.md](RESULTS_AND_LIMITATIONS_2026-10-08.md), with full-precision GitHub Actions run artifacts.
+
+**Important:** The initial 80/20 chronological test contains no X-class events and therefore cannot support a four-class BACC/TSS estimate. An explicitly exploratory 2014-date temporal sensitivity split is provided separately. Full methods and results: [8 October audit](RESULTS_AND_LIMITATIONS_2026-10-08.md).
 
 ## Boundaries and limitations
 
