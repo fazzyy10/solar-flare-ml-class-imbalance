@@ -1,7 +1,7 @@
 # Direct dependencies tested in GitHub Actions on 2026-10-08, Python 3.11.17.
 # Transitive versions are captured separately in CI pip-freeze.txt.
 numpy==2.4.6
-pandas==2.3.3
+pandas==3.0.6
 scipy==1.17.1
 scikit-learn==1.9.1
 imbalanced-learn==0.14.2
