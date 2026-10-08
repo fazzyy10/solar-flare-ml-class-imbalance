@@ -120,6 +120,9 @@ def main() -> None:
                 "mode": mode, "model": model, "sampling": sampling,
                 "test_folds": len(result["folds"]), "missing_class_folds": blank,
                 "mean_bacc_reported": result["mean_balanced_accuracy"],
+                "mean_sklearn_macro_recall": result["mean_balanced_accuracy"],
+                "mean_thesis_style_ovr_bacc": result["mean_thesis_style_ovr_bacc"],
+                "mean_thesis_style_ovr_tss": result["mean_thesis_style_ovr_tss"],
                 "sd_bacc_between_folds": float(np.std([f["balanced_accuracy"] for f in result["folds"]], ddof=1))
                  if len(result["folds"]) > 1 else None,
                 "mean_macro_ovr_tss": float(np.mean(scores)) if scores else None,
@@ -130,7 +133,11 @@ def main() -> None:
             for f in result["folds"]:
                 folds.append({"mode": mode, "model": model, "sampling": sampling,
                               "fold": f["fold"], "balanced_accuracy": f["balanced_accuracy"],
-                              "macro_ovr_tss": f["tss_ovr_macro"], "train_size": f["train_size"],
+                              "macro_ovr_tss": f["tss_ovr_macro"],
+                              "thesis_style_ovr_bacc": f["thesis_style_ovr_bacc"],
+                              "thesis_style_ovr_tss": f["thesis_style_ovr_tss"],
+                              "four_class_evaluable": f["four_class_evaluable"],
+                              "train_size": f["train_size"],
                               "test_size": f["test_size"], **{"test_"+str(k):v for k,v in f["test_classes"].items()},
                               **{"tss_"+str(k):v for k,v in f["tss_ovr_by_class"].items()}})
             print("RESULT " + key + ": " + json.dumps(entry),flush=True)
@@ -146,7 +153,7 @@ def main() -> None:
     (OUT / "run_metadata.json").write_text(json.dumps(
         {"historical_2024_reported_extra_trees_BACC":0.829979,
          "historical_2024_reported_extra_trees_TSS":0.659958,
-         "historical_comparability":"not established: different preprocessing, different CV, sample design, models, TSS aggregation",
+         "historical_comparability":"not established: different preprocessing, CV, random seeds, 100 repeated sampling datasets, aggregation across experiments, and hyperparameters",
          "seed": SEED, "folds_for_CV": FOLDS,
          "models": MODELS, "sampling": SAMPLES, "modes": MODES,
          "runs_successful": len(records)-len(errors), "runs_failed": len(errors),
