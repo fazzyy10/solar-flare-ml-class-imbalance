@@ -62,3 +62,44 @@ def test_chronological_holdout():
     assert len(result["folds"]) == 1
     assert result["folds"][0]["train_size"] == 96
     assert result["folds"][0]["test_size"] == 24
+
+
+def test_ovr_metric_identity():
+    labels = np.array(["B","C","M","X"] * 6)
+    predicted = labels.copy()
+    predicted[0] = "C"
+    scores = tss_ovr(labels, predicted)
+    assert all(v is not None for v in scores.values())
+    tss = np.mean(list(scores.values()))
+    assert 0.0 <= (1.0 + tss) / 2.0 <= 1.0
+
+def test_missing_class_is_flagged_not_extrapolated():
+    df = synthetic_data()
+    # Force the last chronological observations to lack X.
+    final = df["timestamp"] >= df["timestamp"].nlargest(24).min()
+    df.loc[final, "target"] = "C"
+    result = evaluate(df, mode="chronological")
+    assert result["all_splits_four_class_evaluable"] is False
+    assert "X" in result["folds"][0]["unrepresented_test_classes"]
+    assert result["mean_thesis_style_ovr_bacc"] is None
+
+def test_grouped_splits_have_no_active_region_overlap():
+    from sklearn.model_selection import StratifiedGroupKFold
+    df = synthetic_data()
+    x = df.loc[:, FEATURES].to_numpy(dtype=float)
+    y = df.target.to_numpy()
+    groups = df.AR.to_numpy()
+    for tr, te in StratifiedGroupKFold(n_splits=3, shuffle=True, random_state=7).split(x, y, groups):
+        assert set(groups[tr]).isdisjoint(set(groups[te]))
+
+def test_nonfinite_feature_rejected(tmp_path: Path):
+    df = synthetic_data()
+    raw = df.loc[:, FEATURES].copy()
+    raw.insert(0, "AR", df.AR)
+    raw.insert(0, "Flare Date", df.timestamp.dt.strftime("%m/%d/%Y %H:%M"))
+    raw.insert(0, "Flare Class", df.target + "12")
+    raw.loc[0, FEATURES[0]] = float("inf")
+    file = tmp_path / "infinite.csv"
+    raw.to_csv(file, index=False)
+    with pytest.raises(ValueError, match="Non-finite"):
+        load_data(file, verify_upstream=False)

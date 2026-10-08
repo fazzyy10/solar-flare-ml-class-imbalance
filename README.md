@@ -11,6 +11,18 @@ The repository has two purposes:
 1. preserve the submitted MSc research as a frozen historical record; and
 2. develop a transparent reproducibility and methodological-audit pathway without rewriting the assessed work or overstating authorship.
 
+## Start here: research review
+
+This is a **research record**, not a claim to replace the DeepSun forecasting service. The clearest demonstration of the work is the question it asks about rare-event validation and repeated active regions.
+
+**[Read the five-minute research guide](docs/RESEARCH_REVIEWER_GUIDE.md)** · [Methods and measured results](corrected_classical_ml/reconstruction_2026/RESULTS_AND_LIMITATIONS_2026-10-08.md) · [Source comparison with DeepSun](docs/UPSTREAM_COMPARISON.md) · [Reconstruction code and notebook](corrected_classical_ml/reconstruction_2026/)
+
+![Real class distribution](docs/figures/class_imbalance.svg)
+
+![Validation design comparison](docs/figures/validation_comparison.svg)
+
+The 2026 grouped-versus-stratified results are verified *new* findings, not the submitted 2024 performance and not a measurement of an operational prediction system. The historical dissertation is preserved unchanged.
+
 ## Research problem
 
 The dissertation studied four-class solar-flare prediction (B, C, M, X) using SHARP-derived magnetic parameters. Severe class imbalance was central to the evaluation problem, particularly because X-class events were rare.
@@ -24,7 +36,7 @@ The submitted dissertation describes a DeepSun/FlareML-derived dataset covering 
 - **142 M-class flares**
 - **23 X-class flares**
 - **13 SHARP parameters**
-- values already normalized to the range 0-1
+- the dissertation describes normalised values; the verified public original CSV contains raw-scale measurements
 - a 24-hour prediction setting
 
 ## Submitted MSc evaluation
