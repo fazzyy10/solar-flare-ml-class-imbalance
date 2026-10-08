@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use or discuss this repository, please cite the MSc dissertation and distinguish it from later repository audit work."
+title: "Machine Learning for Solar Flare Prediction under Severe Class Imbalance"
+type: other
+authors:
+  - family-names: "Fareed"
+    given-names: "Mohamed Fawaz Hussain"
+repository-code: "https://github.com/fazzyy10/solar-flare-ml-class-imbalance"
+abstract: "Research record and methodological audit for a 2024 MSc Data Science dissertation on four-class solar-flare prediction using SHARP-derived parameters under severe class imbalance."
+keywords:
+  - solar flare prediction
+  - machine learning
+  - class imbalance
+  - SHARP
+  - balanced accuracy
+  - true skill statistic
+  - reproducibility
+preferred-citation:
+  type: thesis
+  title: "Application of Machine Learning Modeling in NOAA SHARP Data for Solar Flare Prediction"
+  authors:
+    - family-names: "Fareed"
+      given-names: "Mohamed Fawaz Hussain"
+  year: 2024
+  institution:
+    name: "Cardiff Metropolitan University"
