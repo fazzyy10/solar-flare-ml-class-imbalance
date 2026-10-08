@@ -105,6 +105,7 @@ def evaluate(data: pd.DataFrame, *, mode: str = "stratified", model: str = "extr
     for fold_number, (train, test) in enumerate(splits, start=1):
         if len(set(y[train])) != len(CLASSES):
             raise ValueError(f"Training fold {fold_number} lacks a flare class")
+        missing_test_classes = [c for c in CLASSES if c not in set(y[test])]
         estimator = build_pipeline(model, sampling, seed + fold_number)
         estimator.fit(x[train], y[train])
         predictions = estimator.predict(x[test])
@@ -114,6 +115,8 @@ def evaluate(data: pd.DataFrame, *, mode: str = "stratified", model: str = "extr
             "train_size": int(len(train)), "test_size": int(len(test)),
             "train_classes": {k: int(sum(y[train] == k)) for k in CLASSES},
             "test_classes": {k: int(sum(y[test] == k)) for k in CLASSES},
+            "four_class_evaluable": not missing_test_classes,
+            "unrepresented_test_classes": missing_test_classes,
             "balanced_accuracy": float(balanced_accuracy_score(y[test], predictions)),
             "tss_ovr_by_class": scores,
             "tss_ovr_macro": float(np.mean([v for v in scores.values() if v is not None]))
@@ -125,6 +128,10 @@ def evaluate(data: pd.DataFrame, *, mode: str = "stratified", model: str = "extr
         "mode": mode, "model": model, "sampling": sampling, "seed": seed,
         "folds": results,
         "mean_balanced_accuracy": float(np.mean([v["balanced_accuracy"] for v in results])),
+        "all_splits_four_class_evaluable": all(v["four_class_evaluable"] for v in results),
+        "evaluation_warning": ("At least one test split lacks a flare class; reported averages "
+                              "do not estimate full four-class performance."
+                              if not all(v["four_class_evaluable"] for v in results) else None),
     }
 
 
