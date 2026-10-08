@@ -110,6 +110,12 @@ def evaluate(data: pd.DataFrame, *, mode: str = "stratified", model: str = "extr
         estimator.fit(x[train], y[train])
         predictions = estimator.predict(x[test])
         scores = tss_ovr(y[test], predictions)
+        # Thesis equations 2-3: class-wise BACC=(TPR+TNR)/2 and TSS=TPR-FPR.
+        # They are averaged over four one-versus-rest classes. If a held-out
+        # test fold lacks any class, a four-class aggregate is undefined.
+        all_four = all(v is not None for v in scores.values())
+        thesis_style_tss = float(np.mean(list(scores.values()))) if all_four else None
+        thesis_style_bacc = (1.0 + thesis_style_tss) / 2.0 if all_four else None
         results.append({
             "fold": fold_number,
             "train_size": int(len(train)), "test_size": int(len(test)),
@@ -118,6 +124,9 @@ def evaluate(data: pd.DataFrame, *, mode: str = "stratified", model: str = "extr
             "four_class_evaluable": not missing_test_classes,
             "unrepresented_test_classes": missing_test_classes,
             "balanced_accuracy": float(balanced_accuracy_score(y[test], predictions)),
+            "sklearn_macro_recall": float(balanced_accuracy_score(y[test], predictions)),
+            "thesis_style_ovr_bacc": thesis_style_bacc,
+            "thesis_style_ovr_tss": thesis_style_tss,
             "tss_ovr_by_class": scores,
             "tss_ovr_macro": float(np.mean([v for v in scores.values() if v is not None]))
             if any(v is not None for v in scores.values()) else None,
@@ -128,6 +137,10 @@ def evaluate(data: pd.DataFrame, *, mode: str = "stratified", model: str = "extr
         "mode": mode, "model": model, "sampling": sampling, "seed": seed,
         "folds": results,
         "mean_balanced_accuracy": float(np.mean([v["balanced_accuracy"] for v in results])),
+        "mean_thesis_style_ovr_bacc": float(np.mean([v["thesis_style_ovr_bacc"] for v in results]))
+            if all(v["thesis_style_ovr_bacc"] is not None for v in results) else None,
+        "mean_thesis_style_ovr_tss": float(np.mean([v["thesis_style_ovr_tss"] for v in results]))
+            if all(v["thesis_style_ovr_tss"] is not None for v in results) else None,
         "all_splits_four_class_evaluable": all(v["four_class_evaluable"] for v in results),
         "evaluation_warning": ("At least one test split lacks a flare class; reported averages "
                               "do not estimate full four-class performance."
