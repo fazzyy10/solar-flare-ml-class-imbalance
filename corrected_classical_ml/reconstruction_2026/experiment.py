@@ -110,6 +110,37 @@ def evaluate(data: pd.DataFrame, *, mode: str = "stratified", model: str = "extr
         estimator.fit(x[train], y[train])
         predictions = estimator.predict(x[test])
         scores = tss_ovr(y[test], predictions)
+        matrix = confusion_matrix(y[test], predictions, labels=CLASSES)
+        class_diagnostics = {}
+        for i, cls in enumerate(CLASSES):
+            tp = int(matrix[i, i])
+            fn = int(matrix[i, :].sum() - tp)
+            fp = int(matrix[:, i].sum() - tp)
+            tn = int(matrix.sum() - tp - fn - fp)
+            recall = float(tp / (tp + fn)) if tp + fn else None
+            specificity = float(tn / (tn + fp)) if tn + fp else None
+            class_diagnostics[cls] = {
+                "support": tp + fn, "predicted": tp + fp,
+                "tp": tp, "fn": fn, "fp": fp, "tn": tn,
+                "recall": recall, "specificity": specificity,
+                "precision": float(tp / (tp + fp)) if tp + fp else None,
+                "one_vs_rest_bacc": (recall + specificity) / 2
+                    if recall is not None and specificity is not None else None,
+                "one_vs_rest_tss": recall + specificity - 1
+                    if recall is not None and specificity is not None else None,
+            }
+        for cls in CLASSES:
+            a, b = class_diagnostics[cls]["one_vs_rest_tss"], scores[cls]
+            if a is None or b is None:
+                if a is not None or b is not None:
+                    raise AssertionError("TSS definition mismatch on missing class")
+            elif not np.isclose(a, b, atol=1e-12):
+                raise AssertionError("Disagreement in TSS calculation")
+        shared_regions = len(set(groups[train]) & set(groups[test]))
+        if mode == "grouped" and shared_regions:
+            raise AssertionError("Grouped validation leaked an active-region identifier")
+        if mode == "chronological" and data.iloc[train].timestamp.max() > data.iloc[test].timestamp.min():
+            raise AssertionError("Chronological holdout was not temporally ordered")
         # Thesis equations 2-3: class-wise BACC=(TPR+TNR)/2 and TSS=TPR-FPR.
         # They are averaged over four one-versus-rest classes. If a held-out
         # test fold lacks any class, a four-class aggregate is undefined.
@@ -121,6 +152,10 @@ def evaluate(data: pd.DataFrame, *, mode: str = "stratified", model: str = "extr
             "train_size": int(len(train)), "test_size": int(len(test)),
             "train_classes": {k: int(sum(y[train] == k)) for k in CLASSES},
             "test_classes": {k: int(sum(y[test] == k)) for k in CLASSES},
+            "shared_active_regions": shared_regions,
+            "confusion_matrix_labels": list(CLASSES),
+            "confusion_matrix": matrix.tolist(),
+            "per_class_diagnostics": class_diagnostics,
             "four_class_evaluable": not missing_test_classes,
             "unrepresented_test_classes": missing_test_classes,
             "balanced_accuracy": float(balanced_accuracy_score(y[test], predictions)),

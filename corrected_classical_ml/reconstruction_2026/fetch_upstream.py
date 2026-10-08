@@ -9,6 +9,7 @@ from urllib.request import Request, urlopen
 UPSTREAM_COMMIT = "44ffd7ad0a6945ee36f6e488a034b8266cb4fb4c"
 UPSTREAM_PATH = "data/original_data/flaringar_original_data.csv"
 GIT_BLOB_SHA1 = "d3c40b44220b4480e0a600314cae46175cd9d127"
+EXPECTED_SHA256 = "69c36526144f5d1485b7f8cc55b254c857c885a840020fe3cb2b887f4c4f8cd3"
 URL = f"https://raw.githubusercontent.com/ccsc-tools/FlareML/{UPSTREAM_COMMIT}/{UPSTREAM_PATH}"
 
 
@@ -21,6 +22,8 @@ def download(destination: Path) -> tuple[Path, str]:
     request = Request(URL, headers={"User-Agent": "MSc-FlareML-reconstruction/1.0"})
     with urlopen(request, timeout=30) as response:
         payload = response.read()
+    if hashlib.sha256(payload).hexdigest() != EXPECTED_SHA256:
+        raise ValueError("Public source failed the recorded SHA-256 integrity check")
     if not verify_git_blob(payload):
         raise ValueError("Upstream file failed the pinned Git blob SHA-1 integrity check")
     destination.parent.mkdir(parents=True, exist_ok=True)
