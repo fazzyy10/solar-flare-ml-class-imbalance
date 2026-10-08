@@ -36,6 +36,11 @@ jobs:
         run: python sweep.py
       - name: Run repeated-seed and four-class chronological sensitivity analyses
         run: python sweep_extensions.py
+      - name: Execute and validate research notebook top to bottom
+        run: |
+          python -m pip install nbconvert ipykernel matplotlib
+          python -m jupyter nbconvert --to notebook --execute overview.ipynb --output overview-executed.ipynb --output-dir local_results --ExecutePreprocessor.timeout=240
+          python -c "import nbformat; n=nbformat.read('local_results/overview-executed.ipynb',as_version=4); nbformat.validate(n); cells=[c for c in n.cells if c.cell_type=='code']; assert cells and all(c.execution_count is not None for c in cells); print('Executed notebook code cells:',len(cells))"
       - name: Record dependency versions and source data integrity
         run: |
           python -m pip freeze > local_results/pip-freeze.txt
