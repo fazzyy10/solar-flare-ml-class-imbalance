@@ -1,0 +1,46 @@
+name: DeepSun 2026 reproduction audit
+
+on:
+  push:
+    branches:
+      - review/deepsun-2026-reference-baselines
+    paths:
+      - corrected_classical_ml/reconstruction_2026/**
+      - .github/workflows/deepsun-reconstruction.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  scientific-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    defaults:
+      run:
+        working-directory: corrected_classical_ml/reconstruction_2026
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: corrected_classical_ml/reconstruction_2026/requirements.txt
+      - name: Install scientific Python dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Run reconstruction unit tests
+        run: python -m pytest -q
+      - name: Retrieve and cryptographically verify upstream 845-event dataset
+        run: python fetch_upstream.py
+      - name: Run full 18-configuration exploratory audit
+        run: python sweep.py
+      - name: Record dependency versions and source data integrity
+        run: |
+          python -m pip freeze > local_results/pip-freeze.txt
+          sha256sum local_data/flaringar_original_data.csv > local_results/upstream-sha256.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: deepsun-2026-audit-results
+          path: corrected_classical_ml/reconstruction_2026/local_results/
+          retention-days: 30
