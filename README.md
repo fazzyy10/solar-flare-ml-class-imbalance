@@ -1,5 +1,7 @@
 # Machine Learning for Solar Flare Prediction under Severe Class Imbalance
 
+[![Verified 2026 research checks](https://github.com/fazzyy10/solar-flare-ml-class-imbalance/actions/workflows/deepsun-reconstruction.yml/badge.svg?branch=main)](https://github.com/fazzyy10/solar-flare-ml-class-imbalance/actions/workflows/deepsun-reconstruction.yml)
+
 **MSc Data Science research record, methodological audit, and post-MSc reproducibility pathway**
 
 This repository documents Mohamed Fawaz Hussain Fareed's 2024 MSc Data Science dissertation at Cardiff Metropolitan University:
@@ -10,6 +12,18 @@ The repository has two purposes:
 
 1. preserve the submitted MSc research as a frozen historical record; and
 2. develop a transparent reproducibility and methodological-audit pathway without rewriting the assessed work or overstating authorship.
+
+## Start here: research review
+
+This is a **research record**, not a claim to replace the DeepSun forecasting service. The clearest demonstration of the work is the question it asks about rare-event validation and repeated active regions.
+
+**[Read the five-minute research guide](docs/RESEARCH_REVIEWER_GUIDE.md)** · [Methods and measured results](corrected_classical_ml/reconstruction_2026/RESULTS_AND_LIMITATIONS_2026-10-08.md) · [Permanent result tables](results/2026-10-08/) · [Source comparison with DeepSun](docs/UPSTREAM_COMPARISON.md) · [Reconstruction code and notebook](corrected_classical_ml/reconstruction_2026/)
+
+![Real class distribution](docs/figures/class_imbalance.svg)
+
+![Validation design comparison](docs/figures/validation_comparison.svg)
+
+The 2026 grouped-versus-stratified results are verified *new* findings, not the submitted 2024 performance and not a measurement of an operational prediction system. The historical dissertation is preserved unchanged.
 
 ## Research problem
 
@@ -24,7 +38,7 @@ The submitted dissertation describes a DeepSun/FlareML-derived dataset covering 
 - **142 M-class flares**
 - **23 X-class flares**
 - **13 SHARP parameters**
-- values already normalized to the range 0-1
+- the dissertation describes normalised values; the verified public original CSV contains raw-scale measurements
 - a 24-hour prediction setting
 
 ## Submitted MSc evaluation
@@ -108,6 +122,20 @@ See [PROVENANCE.md](PROVENANCE.md) and [LICENSES_AND_ATTRIBUTION.md](LICENSES_AN
     └── README.md
 ```
 
+## New 2026 executable reconstruction (review branch)
+
+An independently implemented, **post-MSc** baseline module now lives in
+[corrected_classical_ml/reconstruction_2026/](corrected_classical_ml/reconstruction_2026/README.md).
+It downloads a pinned, publicly available upstream FlareML reference dataset
+after verifying Git integrity, then supports Extra Trees / Random Forest
+evaluation with optional train-fold-only undersampling or SMOTE. Ordinary
+stratified, active-region-grouped, and chronological holdout evaluations are
+provided. Tests use **synthetic fixtures**, not a claimed reproduction of
+the dissertation's numerical results. Original upstream data are not
+redistributed in this repository.
+
+See [the real-data benchmark and limitations](corrected_classical_ml/reconstruction_2026/RESULTS_AND_LIMITATIONS_2026-10-08.md), based on successful GitHub Actions execution of 18 initial configurations, 24 additional repeated-seed configurations and six four-class chronological sensitivity configurations. This is not the recovered 2024 notebook or an independent replication of the thesis's reported 29,400 model tests.
+
 ## What is deliberately not claimed
 
 This repository does **not** claim:
@@ -127,6 +155,6 @@ Those boundaries are intentional.
 **Public full text: available.**  
 **Provenance audit: documented.**  
 **Exact reproduction: not currently claimed.**  
-**Corrected fold-safe rerun: planned as new post-MSc work and will only be promoted once verified.**
+**New post-MSc fold-safe benchmark: run and verified on the public DeepSun dataset; historical replication still not claimed.**
 
 The point of this repository is not to make the historical work look cleaner than it was. It is to make the research trail inspectable: what was submitted, what depended on prior public work, what can be recovered, what methodological questions emerged later, and what should be tested next.
