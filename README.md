@@ -24,7 +24,7 @@ The submitted dissertation describes a DeepSun/FlareML-derived dataset covering 
 - **142 M-class flares**
 - **23 X-class flares**
 - **13 SHARP parameters**
-- values already normalized to the range 0–1
+- values already normalized to the range 0-1
 - a 24-hour prediction setting
 
 ## Submitted MSc evaluation
@@ -51,6 +51,14 @@ The dissertation reports evaluation on the original data plus **100 random-under
 The submitted thesis reports Extra Trees Classifier as the strongest overall performer, with average BACC **0.829979** and average TSS **0.659958** across the study's reported aggregation.
 
 **Important:** these are historical results reported in the submitted dissertation. This repository does not claim that those numerical results have already been independently reproduced.
+
+## Read the dissertation
+
+The public full-text mirror is here:
+
+**[Submitted MSc dissertation - full text](submitted_msc_record/THESIS_FULL_TEXT.md)**
+
+The original submitted PDF remains the authoritative visual record. Its SHA-256 and provenance are recorded in [submitted_msc_record/SOURCE_PDF_CHECKSUM.md](submitted_msc_record/SOURCE_PDF_CHECKSUM.md). The public text mirror is provided to make the complete dissertation wording directly accessible through GitHub without changing the historical record.
 
 ## Integrity and provenance
 
@@ -81,7 +89,8 @@ See [PROVENANCE.md](PROVENANCE.md) and [LICENSES_AND_ATTRIBUTION.md](LICENSES_AN
 ├── CITATION.cff
 ├── submitted_msc_record/
 │   ├── README.md
-│   └── Mohamed_Fawaz_Hussain_Fareed_MSc_Dissertation_2024.pdf
+│   ├── THESIS_FULL_TEXT.md
+│   └── SOURCE_PDF_CHECKSUM.md
 ├── docs/
 │   ├── RESEARCH_QUESTIONS.md
 │   ├── METHODS_SUBMITTED.md
@@ -104,7 +113,7 @@ See [PROVENANCE.md](PROVENANCE.md) and [LICENSES_AND_ATTRIBUTION.md](LICENSES_AN
 This repository does **not** claim:
 
 - that the exact original MSc code has been recovered;
-- that the exact original dataset has been recovered from the private archive;
+- that the exact original local dataset has been recovered from the private archive;
 - that the historical results are already reproduced;
 - that later PyTorch work formed part of the submitted MSc dissertation;
 - that the MSc work was a peer-reviewed publication;
@@ -112,15 +121,10 @@ This repository does **not** claim:
 
 Those boundaries are intentional.
 
-## Full dissertation
-
-The submitted MSc dissertation is preserved in:
-
-[submitted_msc_record/Mohamed_Fawaz_Hussain_Fareed_MSc_Dissertation_2024.pdf](submitted_msc_record/Mohamed_Fawaz_Hussain_Fareed_MSc_Dissertation_2024.pdf)
-
 ## Current status
 
 **Historical research record: available.**  
+**Public full text: available.**  
 **Provenance audit: documented.**  
 **Exact reproduction: not currently claimed.**  
 **Corrected fold-safe rerun: planned as new post-MSc work and will only be promoted once verified.**

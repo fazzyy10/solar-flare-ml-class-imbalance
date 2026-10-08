@@ -2,7 +2,8 @@
 
 ## Ready now
 
-- submitted MSc dissertation preserved as a frozen PDF;
+- submitted MSc dissertation public full-text mirror available;
+- authoritative source PDF checksum recorded;
 - historical research questions, methods and reported results documented;
 - upstream FlareML authorship and licence attribution documented;
 - private-archive provenance limitation documented;

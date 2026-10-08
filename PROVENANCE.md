@@ -6,7 +6,13 @@ The authoritative historical record is the MSc dissertation submitted in August 
 
 **Application of Machine Learning Modeling in NOAA SHARP Data for Solar Flare Prediction**
 
-The PDF in `submitted_msc_record/` is a clean binary copy of that submitted dissertation. Its visible content is not rewritten in this repository.
+The authoritative source PDF has SHA-256:
+
+`29be1acce2a8fc43bfd731e71440ca66e0cd3f2af38275cabfe7d18b0d7d8a66`
+
+and size **3,644,962 bytes**.
+
+The public GitHub file `submitted_msc_record/THESIS_FULL_TEXT.md` is a text mirror extracted from that PDF. It is provided for public accessibility; it does not replace the PDF as the authoritative visual record and does not reproduce the original figures or page layout.
 
 Any later methodological criticism, reconstruction, corrected experiment or neural-network continuation is separate from the assessed MSc work.
 
@@ -25,7 +31,7 @@ This matters because the current archive is not sufficient to claim an exact, by
 
 The public upstream project is:
 
-**FlareML — Predicting Solar Flares with Machine Learning**  
+**FlareML - Predicting Solar Flares with Machine Learning**  
 Authors: Yasser Abduallah, Jason T. L. Wang, Haimin Wang  
 Repository: https://github.com/ccsc-tools/FlareML  
 Zenodo DOI: https://doi.org/10.5281/zenodo.5634114  
@@ -77,6 +83,7 @@ The repository will not publish detailed PyTorch code or numerical results until
 Current status:
 
 - historical dissertation: **verified and preserved**;
+- public full-text mirror: **available**;
 - upstream FlareML source: **publicly identifiable and attributed**;
 - exact original MSc executable notebook: **not recovered from the preserved archive**;
 - exact original local dataset copy: **not recovered from the preserved archive**;

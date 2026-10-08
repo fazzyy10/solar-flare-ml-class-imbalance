@@ -4,9 +4,15 @@ This repository contains material with different provenance. There is no single 
 
 ## Submitted MSc dissertation
 
-`submitted_msc_record/Mohamed_Fawaz_Hussain_Fareed_MSc_Dissertation_2024.pdf`
+Public full-text mirror:
 
-Copyright remains with **Mohamed Fawaz Hussain Fareed**, subject to any rights held by Cardiff Metropolitan University under its academic regulations. The dissertation is published here for scholarly review and portfolio/research-evidence purposes. No broad relicensing of the dissertation is implied.
+`submitted_msc_record/THESIS_FULL_TEXT.md`
+
+Authoritative source PDF SHA-256:
+
+`29be1acce2a8fc43bfd731e71440ca66e0cd3f2af38275cabfe7d18b0d7d8a66`
+
+Copyright remains with **Mohamed Fawaz Hussain Fareed**, subject to any rights held by Cardiff Metropolitan University under its academic regulations. The dissertation text is published here for scholarly review and portfolio/research-evidence purposes. No broad relicensing of the dissertation is implied.
 
 ## Repository-authored documentation
 

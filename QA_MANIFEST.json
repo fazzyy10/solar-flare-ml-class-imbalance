@@ -1,5 +1,8 @@
 {
-  "file_count": 20,
-  "pdf_size_bytes": 3644962,
-  "pdf_sha256": "29be1acce2a8fc43bfd731e71440ca66e0cd3f2af38275cabfe7d18b0d7d8a66"
+  "repository_publication_status": "public full-text mirror published",
+  "source_pdf_pages": 66,
+  "source_pdf_size_bytes": 3644962,
+  "source_pdf_sha256": "29be1acce2a8fc43bfd731e71440ca66e0cd3f2af38275cabfe7d18b0d7d8a66",
+  "source_pdf_ai_provenance_string_scan": "clear for OpenAI, ChatGPT, C2PA, Content Credentials, GPT-5, Claude, Anthropic",
+  "exact_reproduction_claimed": false
 }
