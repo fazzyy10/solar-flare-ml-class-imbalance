@@ -1,5 +1,7 @@
 # Machine Learning for Solar Flare Prediction under Severe Class Imbalance
 
+[![Verified 2026 research checks](https://github.com/fazzyy10/solar-flare-ml-class-imbalance/actions/workflows/deepsun-reconstruction.yml/badge.svg?branch=main)](https://github.com/fazzyy10/solar-flare-ml-class-imbalance/actions/workflows/deepsun-reconstruction.yml)
+
 **MSc Data Science research record, methodological audit, and post-MSc reproducibility pathway**
 
 This repository documents Mohamed Fawaz Hussain Fareed's 2024 MSc Data Science dissertation at Cardiff Metropolitan University:
@@ -15,7 +17,7 @@ The repository has two purposes:
 
 This is a **research record**, not a claim to replace the DeepSun forecasting service. The clearest demonstration of the work is the question it asks about rare-event validation and repeated active regions.
 
-**[Read the five-minute research guide](docs/RESEARCH_REVIEWER_GUIDE.md)** · [Methods and measured results](corrected_classical_ml/reconstruction_2026/RESULTS_AND_LIMITATIONS_2026-10-08.md) · [Source comparison with DeepSun](docs/UPSTREAM_COMPARISON.md) · [Reconstruction code and notebook](corrected_classical_ml/reconstruction_2026/)
+**[Read the five-minute research guide](docs/RESEARCH_REVIEWER_GUIDE.md)** · [Methods and measured results](corrected_classical_ml/reconstruction_2026/RESULTS_AND_LIMITATIONS_2026-10-08.md) · [Permanent result tables](results/2026-10-08/) · [Source comparison with DeepSun](docs/UPSTREAM_COMPARISON.md) · [Reconstruction code and notebook](corrected_classical_ml/reconstruction_2026/)
 
 ![Real class distribution](docs/figures/class_imbalance.svg)
 
