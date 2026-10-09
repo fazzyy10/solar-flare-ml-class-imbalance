@@ -27,7 +27,7 @@ These are the figures **reported in the 2024 dissertation**. I cannot claim an e
 
 ## What changed when I tested active regions separately?
 
-The public reference dataset contains **472 active regions**, and **206** of them appear in more than one event. I wrote a new pipeline to compare conventional stratified cross-validation with validation that keeps active regions on separate sides of the split. Scaling and optional resampling take place within each training fold.
+The public reference dataset contains **472 active regions**, and **206** of them appear in more than one event. The later pipeline compares conventional stratified cross-validation with validation that keeps active regions on separate sides of the split. Scaling and optional resampling take place within each training fold.
 
 ![Comparison of stratified, active-region-grouped and chronological evaluation](docs/figures/validation_comparison.svg)
 
