@@ -30,7 +30,7 @@ def check_thesis_presentation() -> list[str]:
     raw = archive.read_text(encoding="utf-8")
     if len(text) < 100_000 or len(raw) < 110_000:
         errors.append("MSc submitted full-text record is unexpectedly truncated")
-    if re.search(r"\\d+\\s*\\|\\s*P\\s*a\\s*g\\s*e", text, flags=re.I):
+    if re.search(r"\d+\s*\|\s*P\s*a\s*g\s*e", text, flags=re.I):
         errors.append("Stray source-PDF page marker remains in formatted thesis")
     for chapter in range(1, 7):
         if f"## Chapter {chapter}:" not in text:
