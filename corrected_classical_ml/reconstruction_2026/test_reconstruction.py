@@ -147,4 +147,4 @@ def test_public_homepage_does_not_claim_operational_forecasting():
     readme=(root/"README.md").read_text(encoding="utf-8")
     assert "quiet periods" in readme
     assert "lead time" in readme
-    assert "do **not** describe" in readme
+    assert "does not demonstrate a working 24-hour operational forecasting service" in readme
