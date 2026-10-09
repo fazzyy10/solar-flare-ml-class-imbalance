@@ -12,7 +12,7 @@ The authoritative source PDF has SHA-256:
 
 and size **3,644,962 bytes**.
 
-The public GitHub file `submitted_msc_record/THESIS_FULL_TEXT.md` is a text mirror extracted from that PDF. It is provided for public accessibility; it does not replace the PDF as the authoritative visual record and does not reproduce the original figures or page layout.
+The GitHub file `submitted_msc_record/THESIS_FULL_TEXT.md` is a **formatted reading edition** prepared from the original PDF extraction; it retains the assessed wording but improves heading structure, paragraph flow and figure-page navigation. It does not replace the original PDF as the authoritative assessed visual record and does not embed the original artwork. The earlier raw extraction is preserved unchanged as `submitted_msc_record/THESIS_SOURCE_EXTRACTION_ARCHIVE.md`. The [submitted-record guide](submitted_msc_record/README.md) links both editions and the original PDF.
 
 Any later methodological criticism, reconstruction, corrected experiment or neural-network continuation is separate from the assessed MSc work.
 
