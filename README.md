@@ -1,155 +1,96 @@
-# Machine Learning for Solar Flare Prediction under Severe Class Imbalance
+# When the rarest events matter most
 
-[![Verified 2026 research checks](https://github.com/fazzyy10/solar-flare-ml-class-imbalance/actions/workflows/deepsun-reconstruction.yml/badge.svg?branch=main)](https://github.com/fazzyy10/solar-flare-ml-class-imbalance/actions/workflows/deepsun-reconstruction.yml)
+### Solar-flare classification, class imbalance and the way we test a model
 
-**MSc Data Science research record, methodological audit, and post-MSc reproducibility pathway**
+**Mohamed Fawaz Hussain Fareed**  
+MSc Data Science (Distinction), Cardiff Metropolitan University · 2024 dissertation  
+Independent methodological investigation · 2026
 
-This repository documents Mohamed Fawaz Hussain Fareed's 2024 MSc Data Science dissertation at Cardiff Metropolitan University:
+[![Verified research checks](https://github.com/fazzyy10/solar-flare-ml-class-imbalance/actions/workflows/deepsun-reconstruction.yml/badge.svg?branch=main)](https://github.com/fazzyy10/solar-flare-ml-class-imbalance/actions/workflows/deepsun-reconstruction.yml)
 
-> **Application of Machine Learning Modeling in NOAA SHARP Data for Solar Flare Prediction**
+A model can achieve an impressive average score while telling us very little about the events we most want to identify. This is the problem that drew me to solar-flare prediction for my MSc dissertation.
 
-The repository has two purposes:
+The research used NOAA SHARP magnetic parameters to classify B, C, M and X solar flares. But out of **845 labelled events, only 23 were X-class**. If we evaluate every class as though it has the same amount of evidence behind it, it is easy to come away with more confidence than the data warrant.
 
-1. preserve the submitted MSc research as a frozen historical record; and
-2. develop a transparent reproducibility and methodological-audit pathway without rewriting the assessed work or overstating authorship.
+I initially approached this as a problem of **class imbalance and model comparison**. Coming back to the work later, I found another question just as important: **what counts as an independent test of a solar-flare model?**
 
-## Start here: research review
+[Read the research note](docs/RESEARCH_REVIEWER_GUIDE.md) · [Inspect the results](corrected_classical_ml/reconstruction_2026/RESULTS_AND_LIMITATIONS_2026-10-08.md) · [Run the code](corrected_classical_ml/reconstruction_2026/) · [Read the submitted dissertation](submitted_msc_record/THESIS_FULL_TEXT.md)
 
-This is a **research record**, not a claim to replace the DeepSun forecasting service. The clearest demonstration of the work is the question it asks about rare-event validation and repeated active regions.
+![Distribution of B, C, M and X solar flare events from the referenced public dataset](docs/figures/class_imbalance.svg)
 
-**[Read the five-minute research guide](docs/RESEARCH_REVIEWER_GUIDE.md)**
+## The dissertation: a question about imbalance
 
-**Research quality:** [Dataset card](data/DATASET_CARD.md) · [Model card and limitations](docs/MODEL_CARD_2026.md) · [Reproducibility checklist](docs/REPRODUCIBILITY_CHECKLIST.md) · [Code quality and contribution standard](CONTRIBUTING.md) · [Methods and measured results](corrected_classical_ml/reconstruction_2026/RESULTS_AND_LIMITATIONS_2026-10-08.md) · [Permanent result tables](results/2026-10-08/) · [Source comparison with DeepSun](docs/UPSTREAM_COMPARISON.md) · [Reconstruction code and notebook](corrected_classical_ml/reconstruction_2026/)
+My assessed MSc study, *Application of Machine Learning Modeling in NOAA SHARP Data for Solar Flare Prediction*, compared **14 classical machine-learning classifiers** and investigated sampling approaches including random undersampling and SMOTE.
 
-![Real class distribution](docs/figures/class_imbalance.svg)
+The submitted thesis reports **Extra Trees** as its leading method with average **BACC = 0.829979** and **TSS = 0.659958**, using the thesis's metric definitions and reported experimental aggregation. Those are **the 2024 dissertation's reported results**, not numbers this repository claims to have reproduced exactly. The original full executable notebook and preprocessing environment have not been recovered in a form that would justify that claim.
 
-![Validation design comparison](docs/figures/validation_comparison.svg)
+The original research is [preserved in full text](submitted_msc_record/THESIS_FULL_TEXT.md); [its evidence and authorship boundaries](PROVENANCE.md) are recorded separately. I have not rewritten the assessed research to make it appear more current.
 
-The 2026 grouped-versus-stratified results are verified *new* findings, not the submitted 2024 performance and not a measurement of an operational prediction system. The historical dissertation is preserved unchanged.
+## The question I came back to
 
-## Research problem
+The reference data contain **472 solar active regions**. Some regions contribute more than one flare event. In fact, **206 regions occur repeatedly**.
 
-The dissertation studied four-class solar-flare prediction (B, C, M, X) using SHARP-derived magnetic parameters. Severe class imbalance was central to the evaluation problem, particularly because X-class events were rare.
+If a conventional random stratified split places observations from the *same active region* on both sides of a fold, how much does that validation resemble predicting flares from a region the model has never seen?
 
-The submitted dissertation describes a DeepSun/FlareML-derived dataset covering May 2010 to December 2016 with:
+That prompted a separate **2026 investigation**, written and executed after the MSc. It does not replace the submitted study. It tests Extra Trees and Random Forest with training-fold-safe preprocessing and compares ordinary stratified folds, active-region-separated folds and chronological tests.
 
-- **845 flare events**
-- **472 active regions**
-- **128 B-class flares**
-- **552 C-class flares**
-- **142 M-class flares**
-- **23 X-class flares**
-- **13 SHARP parameters**
-- the dissertation describes normalised values; the verified public original CSV contains raw-scale measurements
-- a 24-hour prediction setting
+![Stratified, region-grouped and temporal evaluation designs](docs/figures/validation_comparison.svg)
 
-## Submitted MSc evaluation
+Here is a concrete example from the new runs:
 
-The submitted study evaluated **14 machine-learning classifiers**:
+| Extra Trees with training-fold SMOTE | Four-class one-vs-rest BACC |
+|---|---:|
+| Stratified five-fold validation | **0.7071** |
+| Active-region-grouped five-fold validation | **0.6413** |
 
-1. Decision Tree Classifier
-2. Extra Tree Classifier
-3. Gaussian NB
-4. K Neighbors Classifier
-5. Linear SVC
-6. Passive Aggressive Classifier
-7. Ridge Classifier
-8. SGD Classifier
-9. SVC
-10. Bagging Classifier
-11. Extra Trees Classifier
-12. Gradient Boosting Classifier
-13. Linear Discriminant Analysis
-14. Random Forest Classifier
+For the broader repeated-seed comparison, the grouped score was lower in **17 of 18 matched settings**. I would **not** call the difference a measured leakage effect: grouping changes which observations appear in each fold as well as preventing active-region overlap. The result shows that the evaluation choice matters. It does not isolate one cause.
 
-The dissertation reports evaluation on the original data plus **100 random-under-sampled** and **100 SMOTE-over-sampled** dataset variants with stratified 10-fold cross-validation. It reports **29,400 model tests** in total and uses **Balanced Accuracy (BACC)** and **True Skill Statistic (TSS)** as the principal metrics.
+There was another useful warning. The simple final-20%-by-time holdout contains **no X-class events**. A full four-class BACC or TSS is therefore undefined, no matter how attractive the remaining numbers might look. A separately labelled *post-hoc* temporal sensitivity check is documented, but it is not a substitute for a prospectively chosen external test.
 
-The submitted thesis reports Extra Trees Classifier as the strongest overall performer, with average BACC **0.829979** and average TSS **0.659958** across the study's reported aggregation.
+These may look like inconvenient findings. To me, they are the most interesting part of the continued research.
 
-**Important:** these are historical results reported in the submitted dissertation. This repository does not claim that those numerical results have already been independently reproduced.
+## Look at the evidence
 
-## Read the dissertation
+I wanted this to be inspectable rather than just a PDF and a strong-looking result:
 
-The public full-text mirror is here:
-
-**[Submitted MSc dissertation - full text](submitted_msc_record/THESIS_FULL_TEXT.md)**
-
-The original submitted PDF remains the authoritative visual record. Its SHA-256 and provenance are recorded in [submitted_msc_record/SOURCE_PDF_CHECKSUM.md](submitted_msc_record/SOURCE_PDF_CHECKSUM.md). The public text mirror is provided to make the complete dissertation wording directly accessible through GitHub without changing the historical record.
-
-## Integrity and provenance
-
-The public **FlareML** project by **Yasser Abduallah, Jason T. L. Wang, and Haimin Wang** is an upstream research/software source used in the dissertation's research context. It is MIT licensed upstream:
-
-- https://github.com/ccsc-tools/FlareML
-- https://doi.org/10.5281/zenodo.5634114
-
-Fawaz is **not** presented as the author of FlareML.
-
-A preserved file in the MSc archive named `ccsc_FlareML.ipynb` was later inspected and found to be an HTML snapshot of the public GitHub page rather than executable notebook JSON. The preserved raw archive therefore does not contain enough executable source and data to support a claim of byte-for-byte reproduction of the original MSc experiments.
-
-For that reason, this repository distinguishes three evidence layers:
-
-- **Submitted MSc record (2024):** frozen historical evidence.
-- **Reproducibility / methodology audit:** later inspection of assumptions, validation design, provenance and recoverability.
-- **Post-MSc continuation:** any later experiments are explicitly separate from the submitted MSc dissertation.
-
-See [PROVENANCE.md](PROVENANCE.md) and [LICENSES_AND_ATTRIBUTION.md](LICENSES_AND_ATTRIBUTION.md).
-
-## Repository navigation
-
-| Section | What you will find |
+| What you want to check | Where to look |
 |---|---|
-| [Research review](docs/RESEARCH_REVIEWER_GUIDE.md) | Concise guide for academic and technical reviewers |
-| [2024 assessed dissertation](submitted_msc_record/) | Original research record and complete accessible thesis text |
-| [Methods and results](docs/) | Research questions, validation details, verified figures, benchmark and limitations |
-| [2026 reproducibility study](corrected_classical_ml/reconstruction_2026/) | Independent source-retrieval, baseline code, unit tests and executable Jupyter notebook |
-| [Permanent result tables](results/2026-10-08/) | 2026 verified real-data summaries |
-| [Provenance](PROVENANCE.md) | Precise boundaries between submitted, upstream and later work |
-| [Methodological audit](reproducibility_audit/) | Issues to investigate in validation, class imbalance and temporal dependence |
+| The actual question and the meaning of the results | [Research review](docs/RESEARCH_REVIEWER_GUIDE.md) |
+| The original assessed MSc study | [Submitted dissertation](submitted_msc_record/THESIS_FULL_TEXT.md) |
+| The separately implemented 2026 models, tests and notebook | [Reconstruction code](corrected_classical_ml/reconstruction_2026/) |
+| The 18 model configurations, 24 repeat-seed runs and six exploratory temporal checks | [Detailed results](corrected_classical_ml/reconstruction_2026/RESULTS_AND_LIMITATIONS_2026-10-08.md) |
+| Source data identification and restrictions | [Dataset card](data/DATASET_CARD.md) |
+| Evaluation metrics and intended-use limits | [Model card](docs/MODEL_CARD_2026.md) |
+| Results that remain available after CI artifacts expire | [Permanent results](results/2026-10-08/) |
+| Exact provenance, what was originally submitted, what was added later | [Research provenance](PROVENANCE.md) |
+| How this differs from the upstream research | [DeepSun/FlareML comparison](docs/UPSTREAM_COMPARISON.md) |
+| Remaining reproducibility questions | [Research checklist](docs/REPRODUCIBILITY_CHECKLIST.md) |
 
-## Executed 2026 methodological investigation
+To run the later code locally:
 
-An independently implemented, **post-MSc** baseline module lives in
-[corrected_classical_ml/reconstruction_2026/](corrected_classical_ml/reconstruction_2026/README.md).
-It downloads a pinned, publicly available upstream FlareML reference dataset
-after verifying Git integrity, then supports Extra Trees / Random Forest
-evaluation with optional train-fold-only undersampling or SMOTE. Ordinary
-stratified, active-region-grouped, and chronological holdout evaluations are
-provided. Unit tests use **synthetic fixtures**, while the full pipeline has also been executed on the pinned public dataset. Neither is a claimed reproduction of
-the dissertation's numerical results. Original upstream data are not
-redistributed in this repository.
+```bash
+cd corrected_classical_ml/reconstruction_2026
+python -m pip install -r requirements.txt
+python -m pytest -q
+python fetch_upstream.py
+python sweep.py
+```
 
-See [the real-data benchmark and limitations](corrected_classical_ml/reconstruction_2026/RESULTS_AND_LIMITATIONS_2026-10-08.md), based on successful GitHub Actions execution of 18 initial configurations, 24 additional repeated-seed configurations and six four-class chronological sensitivity configurations. This is not the recovered 2024 notebook or an independent replication of the thesis's reported 29,400 model tests.
+The input is downloaded from a **pinned public version** of FlareML and its bytes are checked; raw data are not redistributed here. GitHub Actions runs the tests, modelling sweeps and notebook. The [successful workflow](https://github.com/fazzyy10/solar-flare-ml-class-imbalance/actions/runs/37831563054) provides evidence that the 2026 analysis executed, **not** that the exact 2024 experiment has been replicated.
 
-## What is deliberately not claimed
+## Credit where it belongs
 
-This repository does **not** claim:
+The **FlareML/DeepSun** reference project and source software were developed by **Yasser Abduallah, Jason T. L. Wang and Haimin Wang**. Their [public project](https://github.com/ccsc-tools/FlareML) and [archived release](https://doi.org/10.5281/zenodo.5634114) are acknowledged throughout this repository. I do not claim their system, publications or data collection as my own work.
 
-- that the exact original MSc code has been recovered;
-- that the exact original local dataset has been recovered from the private archive;
-- that the historical results are already reproduced;
-- that later PyTorch work formed part of the submitted MSc dissertation;
-- that the MSc work was a peer-reviewed publication;
-- that FlareML was authored by Fawaz.
+The 2026 analysis is a new, narrower investigation into evaluation methodology. It is **unpublished**, not a peer-reviewed contribution, not an operational space-weather forecasting system and not evidence that my models outperform DeepSun in deployment.
 
-Those boundaries are intentional.
+## Where I would take this next
 
-## Current status
+I would want independent data and a prospectively fixed time split, stronger uncertainty estimates around the X class, and tests of what survives across regions or solar cycles. I would also want to separate model selection from the final test entirely.
 
-**Historical research record: available.**  
-**Public full text: available.**  
-**Provenance audit: documented.**  
-**Exact reproduction: not currently claimed.**  
-**New post-MSc fold-safe benchmark: run and verified on the public DeepSun dataset; historical replication still not claimed.**
+The question I now find most useful is not simply *which classifier has the highest score?* It is *what would need to be true for me to trust that score?*
 
-The point of this repository is not to make the historical work look cleaner than it was. It is to make the research trail inspectable: what was submitted, what depended on prior public work, what can be recovered, what methodological questions emerged later, and what should be tested next.
+---
 
-## About the researcher
-
-**Mohamed Fawaz Hussain Fareed** is based in Cardiff, United Kingdom. He holds an **MSc in Data Science (Distinction)** and a **BSc (Hons) in Business Information Systems (First Class)** from Cardiff Metropolitan University.
-
-His work spans **data analytics, applied data science, business analysis and process improvement**. His professional background includes healthcare revenue-cycle operations, hospitality revenue analysis and field-service coordination. Employer and client data are not included in this public repository.
-
-His research interests include reliable machine-learning evaluation, class imbalance, source provenance, and the effect of data dependence and temporal structure on modelling conclusions.
-
-[GitHub profile](https://github.com/fazzyy10) · [LinkedIn](https://www.linkedin.com/in/fawaz-hussain-706414bb/)
+**Other research:** [BSc — driver acceptance of mobile navigation systems in Sri Lanka](https://github.com/fazzyy10/bsc-driver-acceptance-navigation)  
+**About:** Mohamed Fawaz Hussain Fareed · Cardiff, United Kingdom · Data Analytics, Business Analysis, Process Improvement and Applied Data Science
