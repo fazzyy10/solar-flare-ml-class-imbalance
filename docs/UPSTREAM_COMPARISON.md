@@ -1,6 +1,6 @@
 # Where this repository stands relative to DeepSun/FlareML
 
-This is an evidence-based comparison of **different projects**, not a leaderboard. The original FlareML is a public research and prediction software system, while this repository records a 2024 MSc study and a 2026 reproducibility investigation.
+DeepSun/FlareML was an existing public research project when I carried out my MSc dissertation. I used its research and data as a source. This page sets out which work belongs to the upstream team, which results I reported in 2024, and what I investigated separately in 2026.
 
 | Dimension | DeepSun / ccsc-tools FlareML | This MSc research repository |
 |---|---|---|
@@ -14,15 +14,15 @@ This is an evidence-based comparison of **different projects**, not a leaderboar
 | Service deployment | Public forecasting tools and connected research services | **None.** No operational forecasting or service-level reliability claimed |
 | Licence | FlareML software: MIT, copyright upstream owner | Dissertation and repository documentation have separate rights; no blanket open-source licence granted |
 
-### Scientific contribution of this repository
+### What the separate 2026 study examined
 
-The 2026 results show the **importance of what constitutes an independent test observation**. Keeping active regions apart reduces the risk that repeated observations from a region appear on both sides of a split. In 17 of 18 seed-matched comparisons over three seeds, the grouped BACC was lower. That is a **descriptive sensitivity finding**, not a significance test or proof that the entire difference is leakage.
+The 2026 study asks what changes when active regions are kept apart during validation. That prevents events from the same region appearing on both sides of a split. In 17 of 18 seed-matched comparisons over three seeds, the grouped BACC was lower. That is a **descriptive sensitivity finding**, not a significance test or proof that the entire difference is leakage.
 
 The 80/20 time holdout also lacks X-class test examples, which prevents a defensible four-class aggregate. That is a stronger methodological observation than a model-performance ranking on an unevaluable holdout.
 
-### Where DeepSun remains stronger
+### Scope of the upstream project
 
-FlareML's scope, published scholarly support, release/DOI, broader modelling and demo/prediction capabilities are **not matched** by this MSc-focused repository. That is not a defect we should hide or fill with fabricated features. The MSc repository can be very strong **as an evidence-backed doctoral research sample** without being a replacement for a production prediction system.
+FlareML includes more methods, public research releases and forecasting demonstrations than my MSc repository. I have not rebuilt its prediction service or matched its published research programme. My later code addresses the narrower question of how different evaluation designs affect results on the public dataset.
 
 ### What has been independently checked
 
