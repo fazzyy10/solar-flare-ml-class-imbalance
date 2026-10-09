@@ -24,7 +24,7 @@ My assessed MSc study, *Application of Machine Learning Modeling in NOAA SHARP D
 
 The submitted thesis reports **Extra Trees** as its leading method with average **BACC = 0.829979** and **TSS = 0.659958**, using the thesis's metric definitions and reported experimental aggregation. Those are **the 2024 dissertation's reported results**, not numbers this repository claims to have reproduced exactly. The original full executable notebook and preprocessing environment have not been recovered in a form that would justify that claim.
 
-The original research is [preserved in full text](submitted_msc_record/THESIS_FULL_TEXT.md); [its evidence and authorship boundaries](PROVENANCE.md) are recorded separately. I have not rewritten the assessed research to make it appear more current.
+The original research is [preserved in full text](submitted_msc_record/THESIS_FULL_TEXT.md); [its evidence and authorship boundaries](PROVENANCE.md) are recorded separately. I also flag an [unresolved count discrepancy in the original experiment description](docs/METHODS_SUBMITTED.md), rather than turn a reported test total into a verified execution count. I have not rewritten the assessed research to make it appear more current.
 
 ## The question I came back to
 
@@ -46,6 +46,8 @@ Here is a concrete example from the new runs:
 For the broader repeated-seed comparison, the grouped score was lower in **17 of 18 matched settings**. I would **not** call the difference a measured leakage effect: grouping changes which observations appear in each fold as well as preventing active-region overlap. The result shows that the evaluation choice matters. It does not isolate one cause.
 
 There was another useful warning. The simple final-20%-by-time holdout contains **no X-class events**. A full four-class BACC or TSS is therefore undefined, no matter how attractive the remaining numbers might look. A separately labelled *post-hoc* temporal sensitivity check is documented, but it is not a substitute for a prospectively chosen external test.
+
+There is another boundary to the question: the 845 rows are **flare-event examples**, not a continuous time series containing the quiet periods needed to assess an alert system's false alarms. Nor have I independently verified that every magnetic observation is positioned at the required lead time before its flare. I therefore do **not** describe these comparisons as demonstrated 24-hour operational forecasting.
 
 These may look like inconvenient findings. To me, they are the most interesting part of the continued research.
 

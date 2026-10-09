@@ -26,7 +26,7 @@ The dissertation compared:
 
 ## Cross-validation
 
-The dissertation reports stratified 10-fold cross-validation. For each algorithm, the text states that the 10-fold procedure was applied across the original, under-sampled and over-sampled datasets, producing 2,100 tests per algorithm and 29,400 tests across 14 algorithms.
+The dissertation reports stratified 10-fold cross-validation. It also reports 2,100 model tests per algorithm and 29,400 across 14 algorithms. **There is an unresolved arithmetic inconsistency in that historical description:** one original dataset plus 100 random-under-sampled and 100 SMOTE-over-sampled variants gives 201 dataset variants; 201 × 10 folds = **2,010**, not 2,100 tests per algorithm, and 2,010 × 14 algorithms = **28,140**, not 29,400. The larger total is the figure **reported by the assessed dissertation**, not a verified execution count. Without the original experiment logs, neither an extra dataset group nor the missing tests can be inferred. The assessed thesis text is preserved unchanged.
 
 ## Algorithms
 

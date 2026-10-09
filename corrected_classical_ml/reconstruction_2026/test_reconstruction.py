@@ -130,3 +130,21 @@ def test_missing_class_must_be_explicit():
     assert result["folds"][0]["per_class_diagnostics"]["X"]["support"] == 0
     assert result["folds"][0]["per_class_diagnostics"]["X"]["one_vs_rest_tss"] is None
     assert result["mean_thesis_style_ovr_bacc"] is None
+
+
+
+def test_historical_execution_count_is_explicitly_unverified():
+    """Do not let a historical arithmetic inconsistency become a reproducibility claim."""
+    root = Path(__file__).resolve().parents[2]
+    methods=(root/"docs/METHODS_SUBMITTED.md").read_text(encoding="utf-8")
+    for evidence in ("29,400", "28,140", "2,010", "201 × 10"):
+        assert evidence in methods
+    assert "unresolved arithmetic inconsistency" in methods
+
+
+def test_public_homepage_does_not_claim_operational_forecasting():
+    root = Path(__file__).resolve().parents[2]
+    readme=(root/"README.md").read_text(encoding="utf-8")
+    assert "quiet periods" in readme
+    assert "lead time" in readme
+    assert "do **not** describe" in readme

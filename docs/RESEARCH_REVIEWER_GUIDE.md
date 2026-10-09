@@ -44,6 +44,12 @@ I therefore do not compare the original thesis's scores to the new 2026 scores a
 
 [Full 2026 method and figures](../corrected_classical_ml/reconstruction_2026/RESULTS_AND_LIMITATIONS_2026-10-08.md) · [Executable code](../corrected_classical_ml/reconstruction_2026/experiment.py) · [Validation checks](../corrected_classical_ml/reconstruction_2026/test_reconstruction.py) · [Successful GitHub Actions run](https://github.com/fazzyy10/solar-flare-ml-class-imbalance/actions/runs/37831563054).
 
+## The questions the data cannot answer
+
+The reference rows describe **curated events that produced flares**. They are not a continuous sample of active regions across periods with no flares. Even a well-scored model on these rows therefore cannot demonstrate an operational alert false-alarm rate or the ability to predict whether *any* flare will occur. The repository also does not independently verify the time offset between each SHARP magnetic measurement and the subsequently labelled flare. Both questions would matter before claiming 24-hour prospective forecasting.
+
+I also found a numerical reporting problem in the historical study: 201 stated dataset variants × 10 folds × 14 classifiers gives **28,140**, while the dissertation reports **29,400** model tests. That difference cannot be resolved from the recovered 2024 execution files. I retain the submitted number as **reported**, not independently confirmed. [Original-method audit](METHODS_SUBMITTED.md).
+
 ## What I would want to investigate next
 
 The work makes me interested in a general research problem: **how can we tell whether the test data answer the generalisation question we care about?**
