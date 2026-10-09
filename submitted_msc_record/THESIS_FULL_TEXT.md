@@ -54,7 +54,13 @@ I hereby declare that this dissertation entitled ‘Application of Machine Learn
 
 ## Abstract
 
-Solar flare prediction has a significant role in comprehending and forecasting space weather as well as mitigating consequences of solar flares in and around earth. The primary objective of the Helioseismic and Magnetic Imager (HMI), (a tool housed within the Solar Dynamics Observatory under NASA's supervision), is to understand the origins and evolution of solar fluctuations and interpret the magnetic behavior of the Sun. HMI offers uninterrupted panoramic views of the solar vector magnetic field, accompanied by frequent data updates, that enhance reliable predictive capacities. Nevertheless, solar flare prediction effort applying these data is remains somewhat constrained. This dissertation aims to evaluate the performance of various machine learning algorithms on solar flare data, and suggest a suitable machine learning algorithm for solar flare prediction. The first step of the research involves in analyzing the recent work in solar flare prediction which answers questions such as what are the datasets been used so far, what kind of machine learning algorithms applied, what are the research gaps, this study can focus on. Moreover, a comprehensive review of existing literature is conducted to identify the most significant SHARP parameters previously highlighted by researchers which are crucial for assessing solar activity and are used extensively in predicting solar flares. This review was instrumental in choosing a potential solar flare dataset which contains these sharp parameters. Since most of the solar flare datasets are imbalanced (solar flare datasets always include a small number of X class flares because if its rarity), it was essential to look at dedicated sampling and validation techniques such as SMOTE and stratified K fold cross validation to tackle class imbalance. After identifying the most suitable dataset, the data analysis and methodology phase involved Exploratory Data Analysis (EDA) and research moves on to training and testing data utilized from the SHARP physical parameters and categorize solar flares into four classes such as B, C, M and X, in accordance with the X-ray flare catalogs available at the NCEI. Furthermore, this study investigates the effectiveness of both conventional and high-performance algorithms using the chosen dataset, 100 under-sampled and 100 oversampled versions of the original dataset. This research has conducted 29400 tests overall before choosing a suitable prediction model. Finally, the research, discusses the implications of the results, identifying a suitable algorithm for solar flare prediction and offering recommendations for future work. The research demonstrates that high-performance algorithms like Extra Trees Classifier and Random Forest Classifier, combined with effective sampling strategies, significantly enhance the ability predict solar flares, thereby providing a robust framework for future studies and applications in this area. Overall, this dissertation provides a comprehensive analysis of machine learning algorithms for imbalanced solar flare datasets, contributing valuable insights and practical guidelines for researchers and practitioners in the field.
+Solar flare prediction has a significant role in comprehending and forecasting space weather as well as mitigating consequences of solar flares in and around earth. The primary objective of the Helioseismic and Magnetic Imager (HMI), (a tool housed within the Solar Dynamics Observatory under NASA's supervision), is to understand the origins and evolution of solar fluctuations and interpret the magnetic behavior of the Sun. HMI offers uninterrupted panoramic views of the solar vector magnetic field, accompanied by frequent data updates, that enhance reliable predictive capacities. Nevertheless, solar flare prediction effort applying these data is remains somewhat constrained. 
+
+This dissertation aims to evaluate the performance of various machine learning algorithms on solar flare data, and suggest a suitable machine learning algorithm for solar flare prediction. The first step of the research involves in analyzing the recent work in solar flare prediction which answers questions such as what are the datasets been used so far, what kind of machine learning algorithms applied, what are the research gaps, this study can focus on. Moreover, a comprehensive review of existing literature is conducted to identify the most significant SHARP parameters previously highlighted by researchers which are crucial for assessing solar activity and are used extensively in predicting solar flares. This review was instrumental in choosing a potential solar flare dataset which contains these sharp parameters. Since most of the solar flare datasets are imbalanced (solar flare datasets always include a small number of X class flares because if its rarity), it was essential to look at dedicated sampling and validation techniques such as SMOTE and stratified K fold cross validation to tackle class imbalance. 
+
+After identifying the most suitable dataset, the data analysis and methodology phase involved Exploratory Data Analysis (EDA) and research moves on to training and testing data utilized from the SHARP physical parameters and categorize solar flares into four classes such as B, C, M and X, in accordance with the X-ray flare catalogs available at the NCEI. Furthermore, this study investigates the effectiveness of both conventional and high-performance algorithms using the chosen dataset, 100 under-sampled and 100 oversampled versions of the original dataset. This research has conducted 29400 tests overall before choosing a suitable prediction model. 
+
+Finally, the research, discusses the implications of the results, identifying a suitable algorithm for solar flare prediction and offering recommendations for future work. The research demonstrates that high-performance algorithms like Extra Trees Classifier and Random Forest Classifier, combined with effective sampling strategies, significantly enhance the ability predict solar flares, thereby providing a robust framework for future studies and applications in this area. Overall, this dissertation provides a comprehensive analysis of machine learning algorithms for imbalanced solar flare datasets, contributing valuable insights and practical guidelines for researchers and practitioners in the field.
 
 ## Acknowledgement
 
@@ -149,7 +155,7 @@ R4.What are the machine learning approaches and algorithms most suitable for pre
 
 R5.What validation techniques can be used to ensure the accuracy of the developed models?
 
-## Chapter 2: Literature review
+## Chapter 2: Literature Review
 
 ### 2.1 Recent Work in Solar Flare Prediction
 
@@ -289,7 +295,7 @@ The “Flare Date” column reflects the initial moment when all 13 sharp parame
 > **Figure 3: Thirteen SHARP Parameters Used in the Research – Descriptions of the Parameters derived from Abduallah et al. (2021)**  
 > [View Figure 3 in the original dissertation (PDF, p. 30)](https://drive.google.com/file/d/1zzil6swde2hxFKjo_YA_aFCiNSIZMD8N/view#page=30)
 
-> **Figure 4: Code Snippet for Removing the Last Two Digits of Solar Flare Classes31 | P a g e**  
+> **Figure 4: Code Snippet for Removing the Last Two Digits of Solar Flare Classes**  
 > [View Figure 4 in the original dissertation (PDF, p. 30)](https://drive.google.com/file/d/1zzil6swde2hxFKjo_YA_aFCiNSIZMD8N/view#page=30)
 
 ### 3.2 Exploratory Data Analysis (EDA)
@@ -301,14 +307,14 @@ One important decision made looking at this table, is this dataset needs normali
 > **Figure 5: Initial Data frame Visualization**  
 > [View Figure 5 in the original dissertation (PDF, p. 31)](https://drive.google.com/file/d/1zzil6swde2hxFKjo_YA_aFCiNSIZMD8N/view#page=31)
 
-> **Figure 6: Overall Statistics of DeepSun Solar Flare Dataset32 | P a g e**  
+> **Figure 6: Overall Statistics of DeepSun Solar Flare Dataset**  
 > [View Figure 6 in the original dissertation (PDF, p. 31)](https://drive.google.com/file/d/1zzil6swde2hxFKjo_YA_aFCiNSIZMD8N/view#page=31)
 
 ### 3.2.1 Normalization
 
 In terms of solar flare prediction, there are a variety of normalization techniques used. These techniques include z-score, MinMax, median, decimal, and the clear sky index (CSI) method, which are commonly used to make input data stationary for global horizontal irradiance (GHI) forecasts. These normalization techniques contribute to improving the performance of forecasting models by reducing errors and enhancing the precision of solar flare predictions, crucial for mitigating potential negative impacts on Earth and space environments. (Singla et al. 2022) According to data skewness and dataset’s nature, MinMax scaler has been used as the normalization technique. Moreover, the DeepSun has recommended the MinMax method for their dataset as well. Let 𝑥ො௜ ௞ (𝑥௜ ௞ , respectively) represents the standardized (original, respectively) measure of the 𝑖 ௧௛ parameter 𝑘௧௛ data sample. Subsequently, ௜ ௞ ௫ො ೔ ೖି௠௜௡೔ ௠௔௫೔ି௠௜௡೔ (1) with, 𝑚𝑎𝑥௜(𝑚𝑖𝑛௜, respectively) denoting the highest (lowest, respectively) value of the 𝑖 ௧௛ parameter. The standardized measures vary within the interval of 0 to 1.
 
-> **Figure 7: Code Snippet for MinMax Normalization33 | P a g e**  
+> **Figure 7: Code Snippet for MinMax Normalization**  
 > [View Figure 7 in the original dissertation (PDF, p. 32)](https://drive.google.com/file/d/1zzil6swde2hxFKjo_YA_aFCiNSIZMD8N/view#page=32)
 
 ### 3.2.2 Data Distribution of Sharp Parameters and AR
@@ -316,7 +322,7 @@ In terms of solar flare prediction, there are a variety of normalization techniq
 > **Figure 8: Data Distribution of Numerical Columns (SHARP Parameters and AR) – Generated in Google**  
 > [View Figure 8 in the original dissertation (PDF, p. 33)](https://drive.google.com/file/d/1zzil6swde2hxFKjo_YA_aFCiNSIZMD8N/view#page=33)
 
-Collaboratory34 | P a g e All sharp parameters possess outliers, but these cannot be excluded from solar flare prediction modeling for several important reasons. Firstly, outliers often represent rare but significant events such as X class flares that can provide critical insights into the conditions leading to major solar flares (Aschwanden 2019). Retaining these outliers ensures that the model is robust and capable of generalizing across both typical and extreme scenarios, thus improving its reliability. And removing outliers could reduce the X flare instances in the dataset which is already low.
+Collaboratory All sharp parameters possess outliers, but these cannot be excluded from solar flare prediction modeling for several important reasons. Firstly, outliers often represent rare but significant events such as X class flares that can provide critical insights into the conditions leading to major solar flares (Aschwanden 2019). Retaining these outliers ensures that the model is robust and capable of generalizing across both typical and extreme scenarios, thus improving its reliability. And removing outliers could reduce the X flare instances in the dataset which is already low.
 
 Additionally, outliers can reveal new patterns or previously unrecognized relationships in the data, offering valuable insights into the underlying processes of solar flare formation. Excluding them might oversimplify the model and fail to capture the full complexity of solar phenomena.
 
@@ -328,15 +334,15 @@ This distribution reveals a significant class imbalance in the data. Most of the
 
 Especially, when it comes to X class flares which has only 23 flare instances. Over sampling will be important in predicting X class flares.
 
-> **Figure 9: Data Distribution of Solar Flare Classes – Generated in Google Collaboratory36 | P a g e**  
+> **Figure 9: Data Distribution of Solar Flare Classes – Generated in Google Collaboratory**  
 > [View Figure 9 in the original dissertation (PDF, p. 35)](https://drive.google.com/file/d/1zzil6swde2hxFKjo_YA_aFCiNSIZMD8N/view#page=35)
 
 Given the class imbalance in flare prediction data, where some classes such as X-class flares are significantly less frequent than others like C-class, it is crucial to employ sampling techniques. In terms of sampling, random under sampler has been used for under sampling and class M will be used as the threshold for reducing instances of the C class, hence C class will be reduced to 142 instances. However, when performing under sampling, 100 random under-sampled datasets will be created, and the model performance average will be considered. When it comes to oversampling, SMOTE has been applied and C class is identified as the majority class. SMOTE will create instances for other classes where all the classes will have 552 instances. Same as under sampling, 100 random over-sampled datasets are created to train the models. In summary, the class imbalance in flare data reflects the natural distribution of solar flare intensities, with some classes being significantly less common than others. Using sampling techniques is essential to address this imbalance, ensuring that the predictive model performs well across all flare classes and does not unfairly favor the majority class.
 
-> **Figure 10: Code Snippet for Under-Sampling with Random Under-Sampler37 | P a g e**  
+> **Figure 10: Code Snippet for Under-Sampling with Random Under-Sampler**  
 > [View Figure 10 in the original dissertation (PDF, p. 36)](https://drive.google.com/file/d/1zzil6swde2hxFKjo_YA_aFCiNSIZMD8N/view#page=36)
 
-> **Figure 11: Code Snippet for Over-Sampling with SMOTE38 | P a g e**  
+> **Figure 11: Code Snippet for Over-Sampling with SMOTE**  
 > [View Figure 11 in the original dissertation (PDF, p. 37)](https://drive.google.com/file/d/1zzil6swde2hxFKjo_YA_aFCiNSIZMD8N/view#page=37)
 
 ### 3.2.4 Feature Correlation
@@ -346,13 +352,13 @@ Performing feature correlation analysis is essential for solar flare prediction 
 > **Figure 12: Feature Correlation Matrix for SHARP Parameters and AR – Generated in Google**  
 > [View Figure 12 in the original dissertation (PDF, p. 38)](https://drive.google.com/file/d/1zzil6swde2hxFKjo_YA_aFCiNSIZMD8N/view#page=38)
 
-Collaboratory39 | P a g e40 | P a g e Weak or No Correlations: AR has weak correlations with most features, indicating it does not have a strong linear relationship with them. Several other features show weak correlations with each other, indicating minimal linear relationships. In summary, there are strong positive correlations among TOTUSJH, TOTBSQ, TOTUSJZ, USFLUX, and AREA_ACR, indicating these features tend to increase together. TOTFZ tends to be negatively correlated with several other features, suggesting it often decreases when those features increase. Some features like AR and EPSZ generally show weaker correlations with other features. Understanding these correlations can be important for feature selection in modeling, as highly correlated features might provide redundant information.
+Collaboratory Weak or No Correlations: AR has weak correlations with most features, indicating it does not have a strong linear relationship with them. Several other features show weak correlations with each other, indicating minimal linear relationships. In summary, there are strong positive correlations among TOTUSJH, TOTBSQ, TOTUSJZ, USFLUX, and AREA_ACR, indicating these features tend to increase together. TOTFZ tends to be negatively correlated with several other features, suggesting it often decreases when those features increase. Some features like AR and EPSZ generally show weaker correlations with other features. Understanding these correlations can be important for feature selection in modeling, as highly correlated features might provide redundant information.
 
 Dropping the AR feature in prediction modeling, rather than any other sharp parameter, is a strategic decision I have taken based on its minimal contribution to the overall model and the observations from the data distribution box plots. The correlation analysis reveals that AR exhibits weak correlations with other features, indicating it does not share much informative overlap with them. For instance, its highest correlation, at 0.078 with R_VALUE, is negligible.
 
 This weak inter-feature correlation suggests that AR is not capturing critical underlying patterns necessary for accurate predictions. Additionally, including features with low relevance can introduce noise, complicate the model, and potentially degrade its performance. In contrast, other sharp parameters like TOTUSJH, TOTBSQ, TOTUSJZ, USFLUX, and AREA_ACR show strong correlations with each other, indicating they encapsulate significant and related aspects of solar activity. Retaining these features ensures that the model leverages comprehensive and relevant information. Including AR may increase or decrease model accuracy, however, whatever the accuracy is, it will not be reliable. Therefore, dropping AR streamlines the model by eliminating a feature that offers limited predictive power, leading to improved efficiency, interpretability, and accuracy of the solar flare prediction model.
 
-In astrophysics, AR represents regions on the Sun with heightened magnetic activity, but it does not quantify the specific characteristics and complexities of the magnetic fields that directly influence solar flare production. Hence the Active Region (AR) of the Sun is not particularly important in predicting solar flare class due to its broad and less specific nature compared to other more precise magnetic field parameters. Key predictive features such as TOTUSJH (total unsigned current helicity), USFLUX (total unsigned magnetic flux), and AREA_ACR (area of41 | P a g e active regions) provide detailed measurements of the magnetic field's structure, which are crucial for understanding and predicting solar flares. These features capture the intricate magnetic environment and energy buildup necessary for flare initiation. In contrast, AR, being a broader descriptor, does not correlate strongly with these critical parameters, offering limited predictive value. Empirical analyses often show that AR ranks low in feature importance, suggesting it adds minimal information to the predictive models. Therefore, focusing on more specific and strongly correlated magnetic field parameters leads to more accurate and reliable predictions of solar flare classes, making AR a less significant feature in such models.
+In astrophysics, AR represents regions on the Sun with heightened magnetic activity, but it does not quantify the specific characteristics and complexities of the magnetic fields that directly influence solar flare production. Hence the Active Region (AR) of the Sun is not particularly important in predicting solar flare class due to its broad and less specific nature compared to other more precise magnetic field parameters. Key predictive features such as TOTUSJH (total unsigned current helicity), USFLUX (total unsigned magnetic flux), and AREA_ACR (area of active regions) provide detailed measurements of the magnetic field's structure, which are crucial for understanding and predicting solar flares. These features capture the intricate magnetic environment and energy buildup necessary for flare initiation. In contrast, AR, being a broader descriptor, does not correlate strongly with these critical parameters, offering limited predictive value. Empirical analyses often show that AR ranks low in feature importance, suggesting it adds minimal information to the predictive models. Therefore, focusing on more specific and strongly correlated magnetic field parameters leads to more accurate and reliable predictions of solar flare classes, making AR a less significant feature in such models.
 
 ### 3.3 Modeling
 
@@ -420,15 +426,15 @@ The algorithms' performance was evaluated by converting a multi-class classifica
 
 The performance of the algorithms was evaluated using two key metrics: Balanced Accuracy (BACC) BACC is defined as below: 1 2 𝑇𝑃 𝑇𝑃+𝐹𝑁 𝑇𝑁 𝑇𝑁+𝐹𝑃 (2) This metric is particularly useful for evaluating imbalanced datasets. BACC examines both sensitivity (referred to as the true positive rate or recall) and specificity (referred to as the true negative rate). The accuracy is computed individually for the positive dataset and the negative dataset, which proves advantageous in scenarios where there is an imbalance between the datasets, meaning one dataset contains significantly more elements than the other. Moreover, due to its impartiality towards the class-imbalance ratio, BACC is particularly valuable. (Akhilesh et al. 2021).
 
-> **Figure 15: Code Snippet for Calculating BACC per Class and Algorithm46 | P a g e**  
+> **Figure 15: Code Snippet for Calculating BACC per Class and Algorithm**  
 > [View Figure 15 in the original dissertation (PDF, p. 45)](https://drive.google.com/file/d/1zzil6swde2hxFKjo_YA_aFCiNSIZMD8N/view#page=45)
 
 True Skill Statistic (TSS) TSS is defined as below: TSS = ቀ 𝑇𝑃 𝑇𝑃+𝐹𝑁 𝐹𝑃 𝑇𝑁+𝐹𝑃ቁ (3) TSS measures a classifier's ability to distinguish between classes, considering both true positives and false positives. It is a robust metric for evaluating the performance of classifiers in scenarios with imbalanced data. (Bloomfield et al. 2012). Moreover, Saini et al. (2024) employed the true skill statistic (TSS) score to validate the performance of machine learning classifiers in a class-imbalanced dataset for solar flare prediction BACC and TSS are derived for every individual binary classification task. Four binary classification tasks are examined. Subsequently, the mean of the BACC and TSS metrics acquired from these four tasks is computed, and this mean is considered as the outcome for the multi-class classification task. The detailed analysis in the subsequent sections will offer insights into the most effective algorithms and their suitability for tasks involving imbalanced data.
 
-> **Figure 16: Code Snippet for Calculating BACC per Class and Algorithm47 | P a g e**  
+> **Figure 16: Code Snippet for Calculating BACC per Class and Algorithm**  
 > [View Figure 16 in the original dissertation (PDF, p. 46)](https://drive.google.com/file/d/1zzil6swde2hxFKjo_YA_aFCiNSIZMD8N/view#page=46)
 
-## Chapter 4: Prediction results and discussion
+## Chapter 4: Prediction Results and Discussion
 
 In terms of results, we will discuss six tables. BACC and TSS results for original dataset, for 100 under-sampled datasets, and 100 over-sampled datasets. Subsequently, we will review how each algorithm as predicted each class in the environment of these different datasets.
 
@@ -439,21 +445,21 @@ In terms of results, we will discuss six tables. BACC and TSS results for origin
 > **Figure 17: BACC Results for Original Dataset**  
 > [View Figure 17 in the original dissertation (PDF, p. 47)](https://drive.google.com/file/d/1zzil6swde2hxFKjo_YA_aFCiNSIZMD8N/view#page=47)
 
-> **Figure 18: TSS Results for Original Dataset48 | P a g e**  
+> **Figure 18: TSS Results for Original Dataset**  
 > [View Figure 18 in the original dissertation (PDF, p. 47)](https://drive.google.com/file/d/1zzil6swde2hxFKjo_YA_aFCiNSIZMD8N/view#page=47)
 
 The performance analysis of various classification algorithms with original dataset highlights notable differences in effectiveness across different methods. Gaussian Naive Bayes (NB) consistently exhibits high performance, with superior BAC and TSS scores. Since the original dataset is one simple data frame and the Gaussian Naive Bayes algorithm’s strength lies in its simplicity and efficiency in handling skewed distributions, leading to its high accuracy and skill metrics with original dataset. The Ridge Classifier's poor performance, reflected in its lowest Balanced Accuracy (BACC) and True Skill Statistic (TSS) scores, could be primarily due to its linear nature and L2 regularization. In summary, algorithms that utilize ensemble methods or iterative learning approaches, such as Gaussian NB, Bagging, and Gradient Boosting, generally demonstrate higher performance due to their ability to manage class imbalances and adapt to complex patterns in the data. Conversely, simpler models or those with restrictive assumptions, such as Ridge Classifier, Linear Discriminant Analysis and Linear SVC, tend to exhibit lower accuracy and skill metrics, emphasizing the importance of model complexity and adaptability in achieving high performance.
 
 ### 4.2 BACC and TSS Results for 100 Under-Sampled Datasets
 
-> **Figure 19: BACC Results for 100 Under-Sampled Datasets49 | P a g e**  
+> **Figure 19: BACC Results for 100 Under-Sampled Datasets**  
 > [View Figure 19 in the original dissertation (PDF, p. 48)](https://drive.google.com/file/d/1zzil6swde2hxFKjo_YA_aFCiNSIZMD8N/view#page=48)
 
 In analyzing the performance of various machine learning algorithms with 100 under-sampled datasets, it reveals distinct trends in how these algorithms perform across different datasets. The Gradient Boosting Classifier and Linear Discriminant Analysis emerge as the top performers.
 
 The Gradient Boosting Classifier consistently demonstrates high balanced accuracy and TSS, achieving an average BACC of 0.734617 and a TSS of 0.469233. This shows that algorithms which demonstrate high accuracy often benefit from their complex structures and adaptability to the data. Ensemble methods such as the Random Forest Classifier and Extra Trees Classifier also perform well by aggregating the outputs of multiple decision trees, which reduces overfitting and improves robustness. Despite their high accuracy, their True Skill Statistic (TSS) might be lower if the individual trees are not sufficiently diversified. In contrast, some algorithms with lower accuracy and TSS, such as the Passive Aggressive Classifier, K Neighbors Classifier, and Ridge Classifier, face limitations due to their inherent simplicity or assumptions.
 
-> **Figure 20: TSS Results for 100 Under-Sampled Datasets50 | P a g e**  
+> **Figure 20: TSS Results for 100 Under-Sampled Datasets**  
 > [View Figure 20 in the original dissertation (PDF, p. 49)](https://drive.google.com/file/d/1zzil6swde2hxFKjo_YA_aFCiNSIZMD8N/view#page=49)
 
 ### 4.3 BACC and TSS Results for 100 Over-Sampled Datasets
@@ -461,7 +467,7 @@ The Gradient Boosting Classifier consistently demonstrates high balanced accurac
 > **Figure 21: BACC Results for 100 Over-Sampled Dataset**  
 > [View Figure 21 in the original dissertation (PDF, p. 50)](https://drive.google.com/file/d/1zzil6swde2hxFKjo_YA_aFCiNSIZMD8N/view#page=50)
 
-> **Figure 22: TSS Results for 100 Under-Sampled Datasets51 | P a g e**  
+> **Figure 22: TSS Results for 100 Under-Sampled Datasets**  
 > [View Figure 22 in the original dissertation (PDF, p. 50)](https://drive.google.com/file/d/1zzil6swde2hxFKjo_YA_aFCiNSIZMD8N/view#page=50)
 
 Extra Trees Classifier stands out as the top performer, showing impressive results in both BACC and TSS. Its high average BACC reflects its ability to maintain high accuracy across all classification tasks, while its strong TSS performance indicates its effectiveness in handling diverse data conditions by balancing sensitivity and specificity. The Random Forest Classifier also performs exceptionally well, with high scores in both BACC and TSS. Its ensemble approach, similar to Extra Trees, allows it to handle large datasets and complex patterns effectively, resulting in strong balanced accuracy and TSS scores. On the other hand, algorithms like the Gaussian Naive Bayes (NB) and Passive Aggressive Classifier exhibit notably lower performance in both metrics.
@@ -472,19 +478,19 @@ In summary, again ensemble methods like Extra Trees and Random Forest outperform
 
 The below tables (respectively), compares the BACC average and TSS average of the 14 machine learning algorithms used in modeling for each binary classification hypothesis and for the overall multi-class classification task predicated on the original dataset, 100 under-sampled and 100 over-sampled datasets.
 
-> **Figure 23: Average BACC Results for Each Class Per Algorithm52 | P a g e**  
+> **Figure 23: Average BACC Results for Each Class Per Algorithm**  
 > [View Figure 23 in the original dissertation (PDF, p. 51)](https://drive.google.com/file/d/1zzil6swde2hxFKjo_YA_aFCiNSIZMD8N/view#page=51)
 
 When analyzing the performance of machine learning algorithms based on Average Balanced Accuracy (BACC) and Average True Skill Statistic (TSS) from all the datasets, insights emerge about their effectiveness across different binary and multi-class classification tasks. Extra Trees Classifier consistently performs at the top across both metrics, with an impressive Average BACC of 0.829979 and an Average TSS of 0.659958 and register itself as the most suitable machine learning algorithm amongst all the algorithms evaluated. This algorithm benefits from its ensemble approach, which aggregates the predictions from multiple decision trees, enhancing its ability to handle complex and varied data distributions. Passive Aggressive Classifier performs the weakest with an Average BACC of 0.691841 and an Average TSS of 0.311008. Its aggressive update mechanism, designed to adapt quickly to new data, appears to be less effective in accurately distinguishing between classes in this dataset.
 
-> **Figure 24:Average TSS Results for Each Class Per Algorithm53 | P a g e**  
+> **Figure 24:Average TSS Results for Each Class Per Algorithm**  
 > [View Figure 24 in the original dissertation (PDF, p. 52)](https://drive.google.com/file/d/1zzil6swde2hxFKjo_YA_aFCiNSIZMD8N/view#page=52)
 
 Moreover, if we compare the accuracies across datasets, the results from the under-sampled datasets and over-sampled datasets are better (respectively) than those from the original dataset.
 
 This can be a consequence of the refined class distributions in the modified datasets than the original dataset itself with the ratio of X-class flares to C-class flares being higher in the adjusted datasets than in the original dataset. It is important to highlight that performance of all the algorithms decreases when forecasting X-class flares. This is due to the fact that X class having a considerably smaller number of flares than the other classes, leading the algorithms to lack sufficient knowledge about X-class flares. Overall, ensemble methods like Extra Trees and Random Forest achieve the best results due to their ability to aggregate multiple models' predictions, handling complexity and varied data distributions effectively. In contrast, simpler models and those with less complex ensemble strategies struggle to achieve similar performance, often due to their limitations in capturing intricate patterns or handling non-linear class boundaries.
 
-## Chapter 5: Conclusion and recommendations
+## Chapter 5: Conclusion and Recommendations
 
 ### 5.1 Review of Research Objectives and Research Questions
 
