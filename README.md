@@ -13,7 +13,7 @@ When I revisited the work after graduating, I was interested in something more s
 
 That question led to the separate, executable **2026 evaluation study** in this repository.
 
-[My research discussion](docs/RESEARCH_REVIEWER_GUIDE.md) · [Detailed 2026 results](corrected_classical_ml/reconstruction_2026/RESULTS_AND_LIMITATIONS_2026-10-08.md) · [Run the experiments](corrected_classical_ml/reconstruction_2026/) · [Read my submitted dissertation](submitted_msc_record/THESIS_FULL_TEXT.md)
+[My research discussion](docs/RESEARCH_REVIEWER_GUIDE.md) · [Detailed 2026 results](corrected_classical_ml/reconstruction_2026/RESULTS_AND_LIMITATIONS_2026-10-08.md) · [Run the experiments](corrected_classical_ml/reconstruction_2026/) · [Read the formatted MSc dissertation](submitted_msc_record/THESIS_FULL_TEXT.md) · [View the original 66-page PDF](https://drive.google.com/file/d/1zzil6swde2hxFKjo_YA_aFCiNSIZMD8N/view)
 
 ![Class distribution in the public reference dataset](docs/figures/class_imbalance.svg)
 
@@ -52,7 +52,7 @@ The submitted 2024 dissertation, the independent 2026 code and the upstream Flar
 
 | Material | Purpose |
 |---|---|
-| [Submitted dissertation](submitted_msc_record/THESIS_FULL_TEXT.md) | Full-text record of the assessed 2024 research |
+| [Submitted dissertation](submitted_msc_record/README.md) | Start with the original formatted 66-page PDF or read the structured GitHub edition; assessed 2024 research is unchanged |
 | [Research questions](docs/RESEARCH_QUESTIONS.md) and [submitted methods](docs/METHODS_SUBMITTED.md) | What I originally set out to test |
 | [2026 code, tests and notebook](corrected_classical_ml/reconstruction_2026/) | The independently developed follow-up evaluation |
 | [Results and limitations](corrected_classical_ml/reconstruction_2026/RESULTS_AND_LIMITATIONS_2026-10-08.md) | Experimental settings, fold issues and verified findings |
