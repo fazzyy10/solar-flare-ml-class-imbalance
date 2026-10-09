@@ -1,67 +1,59 @@
-# A closer look at my solar-flare research
+# A closer look at the solar-flare experiments
 
-**Mohamed Fawaz Hussain Fareed** · MSc Data Science, Cardiff Metropolitan University  
-**2024 assessed dissertation; separate, executable 2026 methodology study**
+**MSc Data Science, Cardiff Metropolitan University**  
+2024 dissertation and a separate methodological investigation carried out in 2026
 
-If you only have a few minutes, I would draw your attention to one feature of this research: **the result changes when the question used to evaluate it changes.**
+## The problem I was trying to solve
 
-## Where the work started
+My MSc work used NOAA SHARP magnetic parameters to classify solar-flare events as B, C, M or X. The original dataset has **845 events** and only **23 X-class events**. Because of that imbalance, I did not want ordinary accuracy to be the only basis for model comparison.
 
-For my MSc dissertation I studied classification of **B, C, M and X solar-flare events** using NOAA SHARP-derived magnetic measurements. The reference dataset contains **845 events**, of which only **23** are X class.
+The submitted dissertation investigated 14 machine-learning classifiers and different data-sampling methods. It reported Extra Trees as the strongest overall performer under the thesis's evaluation protocol, with **BACC 0.829979** and **TSS 0.659958**. Those numbers come from the **2024 assessed study**. I have not recovered the complete original executable setup needed to reproduce them exactly.
 
-An overall score can conceal weak evidence for the rarest class, which is why the original study compared models and sampling approaches using Balanced Accuracy and True Skill Statistic rather than treating ordinary accuracy as sufficient. It reports **14 classifiers**, with Extra Trees leading the thesis's reported evaluation. The published thesis figures are **BACC 0.829979** and **TSS 0.659958**. These are the original dissertation's figures, **not an independently reproduced result**.
+[Read the assessed dissertation](../submitted_msc_record/THESIS_FULL_TEXT.md) or [its reported methods](METHODS_SUBMITTED.md).
 
-[Original dissertation](../submitted_msc_record/THESIS_FULL_TEXT.md) · [Methods and historical provenance](../PROVENANCE.md).
+## Revisiting the validation design
 
-## A question that surfaced later
+The point I wanted to check in 2026 was whether random event-level validation answered the right question.
 
-I returned to the source and noticed that 845 observations did not represent 845 unrelated solar regions. There are **472 active-region identifiers**, and **206 regions appear more than once**.
+There are **472 active regions** in the reference data, with **206 regions contributing repeated events**. If a model sees a region during training and is then tested on another event from the same region, that may be easier than predicting a flare from an entirely unseen region.
 
-This leads to a specific question: if events from a region can appear in both the training and test fold, are we really evaluating performance on a *new region*?
+The separate 2026 pipeline keeps active regions apart in grouped validation, fits preprocessing within training folds, and compares results with conventional stratified splits. That later analysis is [available as executable code](../corrected_classical_ml/reconstruction_2026/).
 
-The independent **2026 follow-up** compares traditional stratification with active-region-grouped validation. Preprocessing and optional SMOTE/undersampling occur within training folds, not on the complete dataset.
+![Comparison of validation approaches](figures/validation_comparison.svg)
 
-![The different questions asked by three evaluation designs](figures/validation_comparison.svg)
+For Extra Trees with train-fold SMOTE, the new five-fold study returned these mean four-class one-versus-rest BACC values:
 
-For **Extra Trees + train-fold SMOTE**, the mean four-class one-versus-rest BACC was:
+| Split | BACC |
+|---|---:|
+| Stratified | **0.7071** |
+| Grouped by active region | **0.6413** |
 
-- **0.7071** using stratified five-fold validation.
-- **0.6413** using grouped five-fold validation.
+Across three random seeds and the model/sampling combinations, the grouped BACC was lower in **17 of 18 matched settings**.
 
-Across **18** seed-matched comparisons, the grouped result was lower in **17**. This does not establish the exact size of leakage bias. Grouped partitions also alter class composition and sample difficulty. I treat it as evidence that the validation decision affects the estimate, not as proof of a particular causal mechanism.
+I would not interpret that entire difference as leakage. Grouping alters fold membership and class composition as well as preventing the same region from appearing on both sides of a split. Still, it changes the evaluation enough that I would want the intended deployment question settled *before* choosing the split.
 
-## One result that should not be scored
+## When a score should be left undefined
 
-I also tested a straightforward final-20%-by-time holdout. Its test set contained **no X events**. That makes a full four-class BACC/TSS **undefined**.
+The first chronological experiment trained on the earliest 80% of events and tested on the final 20%. There were **no X-class flares** in that test period, so it could not give a meaningful four-class BACC or TSS.
 
-Reporting a neat number anyway would answer a different question than the one in the dissertation. A separately reported, retrospectively selected 2014-start temporal sensitivity check includes nine X examples, but it is post hoc and too limited to claim operational forecasting validity.
+I explored an alternative cutoff beginning in 2014 with nine X-class test examples. I chose it after seeing the first problem. It is therefore **post hoc** and cannot be treated as a clean external test.
 
-## Reproduction is a different claim
+There is also a limit to the upstream data itself. They contain curated flare-event observations, not all the quiet periods when no flare occurs. Such a dataset cannot establish the real-world false-alarm rate of a forecasting service. The required lead time between magnetic features and labelled flare events is not independently verified in this repository.
 
-The original 2024 executable workflow and the exact transformation of its local dataset have not been fully recovered. A preserved `ccsc_FlareML.ipynb` archive entry was in fact an HTML page snapshot, not notebook JSON.
+## A separate issue in the assessed record
 
-I therefore do not compare the original thesis's scores to the new 2026 scores as if the latter reproduced the former. The new script uses other folds, preprocessing, model settings and selection decisions. What it demonstrates is a **testable methodological investigation** using a pinned and checksum-verified public source, not restoration of an irrecoverable execution.
+The 2024 dissertation reports **29,400 model tests**. The procedure described in the dissertation implies **201 dataset variants × 10 folds × 14 classifiers = 28,140**. I do not have an original run log that resolves the difference, and I have not revised the historical submission. The number 29,400 remains a *reported* figure rather than a confirmed execution count. [Details](METHODS_SUBMITTED.md).
 
-[Full 2026 method and figures](../corrected_classical_ml/reconstruction_2026/RESULTS_AND_LIMITATIONS_2026-10-08.md) · [Executable code](../corrected_classical_ml/reconstruction_2026/experiment.py) · [Validation checks](../corrected_classical_ml/reconstruction_2026/test_reconstruction.py) · [Successful GitHub Actions run](https://github.com/fazzyy10/solar-flare-ml-class-imbalance/actions/runs/37831563054).
+Similarly, the archived `ccsc_FlareML.ipynb` entry turned out to be an HTML snapshot of an upstream page, not a complete runnable notebook. I have not treated it as recovered 2024 executable code.
 
-## The questions the data cannot answer
+## Where the new evidence can be checked
 
-The reference rows describe **curated events that produced flares**. They are not a continuous sample of active regions across periods with no flares. Even a well-scored model on these rows therefore cannot demonstrate an operational alert false-alarm rate or the ability to predict whether *any* flare will occur. The repository also does not independently verify the time offset between each SHARP magnetic measurement and the subsequently labelled flare. Both questions would matter before claiming 24-hour prospective forecasting.
+The 2026 pipeline uses the pinned public upstream CSV, verifies its bytes, and records active-region overlap and class support by fold. Its outputs include class-level diagnostics and confusion matrices, as well as the reported aggregate scores.
 
-I also found a numerical reporting problem in the historical study: 201 stated dataset variants × 10 folds × 14 classifiers gives **28,140**, while the dissertation reports **29,400** model tests. That difference cannot be resolved from the recovered 2024 execution files. I retain the submitted number as **reported**, not independently confirmed. [Original-method audit](METHODS_SUBMITTED.md).
+[2026 results and experimental settings](../corrected_classical_ml/reconstruction_2026/RESULTS_AND_LIMITATIONS_2026-10-08.md) · [Source code](../corrected_classical_ml/reconstruction_2026/experiment.py) · [Tests](../corrected_classical_ml/reconstruction_2026/test_reconstruction.py) · [GitHub Actions scientific run](https://github.com/fazzyy10/solar-flare-ml-class-imbalance/actions/runs/37918912141)
 
-## What I would want to investigate next
+The next experiment I would design is a prospectively fixed temporal evaluation, with independent data and clear uncertainty estimates around the rare X class. I would keep any model selection separate from the final evaluation.
 
-The work makes me interested in a general research problem: **how can we tell whether the test data answer the generalisation question we care about?**
+The **2024 thesis** and the **2026 study** answer related but different questions. This repository records what I reported in the degree, what I subsequently tested, and which conclusions the evidence still does not support.
 
-I would extend this with predeclared temporal splits, external evaluation across regions and solar cycles, uncertainty estimates for rare classes and a more explicit examination of calibration. The present work does not establish those results. It creates reasons to test them.
-
-For someone reviewing this as evidence of research potential, the point I would emphasise is the progression from *comparing classifiers* to *challenging what makes a comparison credible*. The fact that some results became harder to report after a more careful audit is not something I want to hide.
-
-## Sources and credit
-
-DeepSun/FlareML was developed by **Yasser Abduallah, Jason T. L. Wang and Haimin Wang**. [Upstream code and attribution](https://github.com/ccsc-tools/FlareML) · [Source comparison](UPSTREAM_COMPARISON.md) · [Data card](../data/DATASET_CARD.md).
-
-The assessed MSc project, this later independent follow-up and the original upstream software are three distinct contributions. None is being presented here as a peer-reviewed paper by me.
-
-**Suggested reading:** [original 2024 method](../submitted_msc_record/THESIS_FULL_TEXT.md) → [2026 validation results](../corrected_classical_ml/reconstruction_2026/RESULTS_AND_LIMITATIONS_2026-10-08.md) → [source code](../corrected_classical_ml/reconstruction_2026/).
+**Source credit:** the original DeepSun/FlareML research software and data were developed by **Yasser Abduallah, Jason T. L. Wang and Haimin Wang**. [Upstream repository](https://github.com/ccsc-tools/FlareML) · [Ownership and source details](UPSTREAM_COMPARISON.md) · [Dataset card](../data/DATASET_CARD.md). The 2026 investigation is not a peer-reviewed paper or a deployed space-weather forecast system.
