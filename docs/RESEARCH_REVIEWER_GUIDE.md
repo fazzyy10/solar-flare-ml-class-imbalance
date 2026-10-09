@@ -1,41 +1,61 @@
-# Research review | Solar-flare prediction under class imbalance
+# A closer look at my solar-flare research
 
-**Mohamed Fawaz Hussain Fareed — MSc Data Science, Cardiff Metropolitan University (2024)**  
-**Research record and transparent post-MSc methodological investigation (2026)**
+**Mohamed Fawaz Hussain Fareed** · MSc Data Science, Cardiff Metropolitan University  
+**2024 assessed dissertation; separate, executable 2026 methodology study**
 
-This repository contains two deliberately different pieces of work. The assessed MSc dissertation studied four-class solar-flare prediction using NOAA SHARP-derived magnetic parameters. The later follow-up interrogates the original evaluation assumptions using an independently implemented classical-ML pipeline and the publicly available source dataset. It does **not** rewrite the submitted study.
+If you only have a few minutes, I would draw your attention to one feature of this research: **the result changes when the question used to evaluate it changes.**
 
-## The research question
+## Where the work started
 
-**What changes when solar-flare models are evaluated on previously unseen active regions, instead of randomly partitioning events from the same region?**
+For my MSc dissertation I studied classification of **B, C, M and X solar-flare events** using NOAA SHARP-derived magnetic measurements. The reference dataset contains **845 events**, of which only **23** are X class.
 
-The public data contain 845 labelled events from 472 active regions, with only 23 X-class events. Of 472 regions, 206 have multiple events. This makes ordinary stratified cross-validation a useful conventional baseline, but potentially optimistic for a new-region generalisation question.
+An overall score can conceal weak evidence for the rarest class, which is why the original study compared models and sampling approaches using Balanced Accuracy and True Skill Statistic rather than treating ordinary accuracy as sufficient. It reports **14 classifiers**, with Extra Trees leading the thesis's reported evaluation. The published thesis figures are **BACC 0.829979** and **TSS 0.659958**. These are the original dissertation's figures, **not an independently reproduced result**.
 
-## Reproducible evidence
+[Original dissertation](../submitted_msc_record/THESIS_FULL_TEXT.md) · [Methods and historical provenance](../PROVENANCE.md).
 
-| Item | Evidence |
-|---|---|
-| Original dissertation | [Complete submitted thesis text](../submitted_msc_record/THESIS_FULL_TEXT.md) · [submission provenance](../PROVENANCE.md) |
-| Public research source | [FlareML](https://github.com/ccsc-tools/FlareML) by Abduallah, J. T. L. Wang and H. Wang |
-| Exact input version | Git commit `44ffd7ad0a6945ee36f6e488a034b8266cb4fb4c`, data SHA-256 `69c36526144f5d1485b7f8cc55b254c857c885a840020fe3cb2b887f4c4f8cd3` |
-| New executable analysis | [Code, tests and notebook](../corrected_classical_ml/reconstruction_2026/) |
-| Verified execution | [GitHub Actions scientific audit](https://github.com/fazzyy10/solar-flare-ml-class-imbalance/actions/runs/37823855291) |
-| Methods and detailed results | [2026 results and limitations](../corrected_classical_ml/reconstruction_2026/RESULTS_AND_LIMITATIONS_2026-10-08.md) |
+## A question that surfaced later
 
-## Findings worth discussing at a research interview
+I returned to the source and noticed that 845 observations did not represent 845 unrelated solar regions. There are **472 active-region identifiers**, and **206 regions appear more than once**.
 
-1. **Dependence between events matters.** In ordinary stratified CV, some active-region identifiers appear in both train and validation folds (88–93 per fold in the seed-42 audit). Grouped CV eliminates those overlaps.
-2. **The evaluation design changes the result.** For Extra Trees with train-fold-only SMOTE, thesis-style mean one-versus-rest BACC is **0.7071** in stratified CV and **0.6413** in grouped CV. Scores should not be interpreted as a measured causal leakage bias: grouping also changes the composition and difficulty of the folds.
-3. **Extreme events remain fragile.** A naive final-20%-by-time holdout has zero X-class events. Thus its full four-class BACC/TSS is undefined. A *post-hoc* 2014-start split contains nine X-class examples after an active-region embargo, but is too small and retrospectively chosen to support an operational forecasting claim.
-4. **Metric definitions matter.** The dissertation's four one-versus-rest BACC/TSS values are averaged, rather than using scikit-learn's ordinary multiclass balanced accuracy (macro recall). The repository records both under separate names.
-5. **Reproduction is not the same as reinterpretation.** The submitted 2024 thesis reports Extra Trees BACC 0.829979 and TSS 0.659958; its original executable notebook and complete preprocessing state were not recovered. Different folds, hyperparameters, sampling frequencies and source transformations prevent a like-for-like numerical comparison.
+This leads to a specific question: if events from a region can appear in both the training and test fold, are we really evaluating performance on a *new region*?
 
-## Why this is relevant to ML doctoral research
+The independent **2026 follow-up** compares traditional stratification with active-region-grouped validation. Preprocessing and optional SMOTE/undersampling occur within training folds, not on the complete dataset.
 
-The useful transferable practice is **asking whether an evaluation measures the scientific question it claims to measure**. That question carries into time-series forecasting, probabilistic modelling, uncertainty quantification and distribution shift. It also creates tractable next experiments: grouped versus time-blocked splits, uncertainty estimates for rare classes, model-selection separation, calibration and external validation.
+![The different questions asked by three evaluation designs](figures/validation_comparison.svg)
 
-This project **does not claim** proficiency in probabilistic forecasting, advanced GNNs, peer-reviewed publication, or deployed space-weather services. It demonstrates an MSc ML research base and a later, critical, reproducible examination of its assumptions.
+For **Extra Trees + train-fold SMOTE**, the mean four-class one-versus-rest BACC was:
 
-**Suggested reading order (under five minutes):** [data and validation figure](figures/validation_comparison.svg) → this page → [results](../corrected_classical_ml/reconstruction_2026/RESULTS_AND_LIMITATIONS_2026-10-08.md) → [code](../corrected_classical_ml/reconstruction_2026/experiment.py) → thesis methodology.
+- **0.7071** using stratified five-fold validation.
+- **0.6413** using grouped five-fold validation.
 
-*This reviewer guide supplements the frozen Hildesheim application documents; it does not replace or revise them.*
+Across **18** seed-matched comparisons, the grouped result was lower in **17**. This does not establish the exact size of leakage bias. Grouped partitions also alter class composition and sample difficulty. I treat it as evidence that the validation decision affects the estimate, not as proof of a particular causal mechanism.
+
+## One result that should not be scored
+
+I also tested a straightforward final-20%-by-time holdout. Its test set contained **no X events**. That makes a full four-class BACC/TSS **undefined**.
+
+Reporting a neat number anyway would answer a different question than the one in the dissertation. A separately reported, retrospectively selected 2014-start temporal sensitivity check includes nine X examples, but it is post hoc and too limited to claim operational forecasting validity.
+
+## Reproduction is a different claim
+
+The original 2024 executable workflow and the exact transformation of its local dataset have not been fully recovered. A preserved `ccsc_FlareML.ipynb` archive entry was in fact an HTML page snapshot, not notebook JSON.
+
+I therefore do not compare the original thesis's scores to the new 2026 scores as if the latter reproduced the former. The new script uses other folds, preprocessing, model settings and selection decisions. What it demonstrates is a **testable methodological investigation** using a pinned and checksum-verified public source, not restoration of an irrecoverable execution.
+
+[Full 2026 method and figures](../corrected_classical_ml/reconstruction_2026/RESULTS_AND_LIMITATIONS_2026-10-08.md) · [Executable code](../corrected_classical_ml/reconstruction_2026/experiment.py) · [Validation checks](../corrected_classical_ml/reconstruction_2026/test_reconstruction.py) · [Successful GitHub Actions run](https://github.com/fazzyy10/solar-flare-ml-class-imbalance/actions/runs/37831563054).
+
+## What I would want to investigate next
+
+The work makes me interested in a general research problem: **how can we tell whether the test data answer the generalisation question we care about?**
+
+I would extend this with predeclared temporal splits, external evaluation across regions and solar cycles, uncertainty estimates for rare classes and a more explicit examination of calibration. The present work does not establish those results. It creates reasons to test them.
+
+For someone reviewing this as evidence of research potential, the point I would emphasise is the progression from *comparing classifiers* to *challenging what makes a comparison credible*. The fact that some results became harder to report after a more careful audit is not something I want to hide.
+
+## Sources and credit
+
+DeepSun/FlareML was developed by **Yasser Abduallah, Jason T. L. Wang and Haimin Wang**. [Upstream code and attribution](https://github.com/ccsc-tools/FlareML) · [Source comparison](UPSTREAM_COMPARISON.md) · [Data card](../data/DATASET_CARD.md).
+
+The assessed MSc project, this later independent follow-up and the original upstream software are three distinct contributions. None is being presented here as a peer-reviewed paper by me.
+
+**Suggested reading:** [original 2024 method](../submitted_msc_record/THESIS_FULL_TEXT.md) → [2026 validation results](../corrected_classical_ml/reconstruction_2026/RESULTS_AND_LIMITATIONS_2026-10-08.md) → [source code](../corrected_classical_ml/reconstruction_2026/).
