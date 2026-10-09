@@ -17,7 +17,7 @@ The point I wanted to check in 2026 was whether random event-level validation an
 
 There are **472 active regions** in the reference data, with **206 regions contributing repeated events**. If a model sees a region during training and is then tested on another event from the same region, that may be easier than predicting a flare from an entirely unseen region.
 
-I developed a separate pipeline that keeps active regions apart in grouped validation, fits preprocessing within training folds, and compares results with conventional stratified splits. That later analysis is [available as executable code](../corrected_classical_ml/reconstruction_2026/).
+The separate 2026 pipeline keeps active regions apart in grouped validation, fits preprocessing within training folds, and compares results with conventional stratified splits. That later analysis is [available as executable code](../corrected_classical_ml/reconstruction_2026/).
 
 ![Comparison of validation approaches](figures/validation_comparison.svg)
 
