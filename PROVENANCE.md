@@ -89,4 +89,4 @@ Current status:
 - exact original local dataset copy: **not recovered from the preserved archive**;
 - exact original environment: **not recovered**;
 - byte-for-byte rerun: **not claimed**;
-- corrected post-MSc reconstruction: **planned and must be verified before being labelled reproducible**.
+- independent post-MSc 2026 evaluation: **implemented, executed on pinned public reference data and checked in GitHub Actions**. This is a new evaluation, not a reproduction of the assessed 2024 MSc experiment.
